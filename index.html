@@ -10,7 +10,7 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>Mon expérience dans la musique — v0.2</title>
+<title>Mon expérience dans la musique — v0.3</title>
 
 <!-- ========================================================
      GSAP
@@ -24,26 +24,25 @@
 
 /* =========================================================
    MON EXPÉRIENCE DANS LA MUSIQUE
-   V0.2 — FENÊTRES ANIMÉES
+   V0.3 — TIMELINE AUDIO + NARRATION
 
    MASTER : 1080 × 1920
    TEMPO  : 124 BPM
-   DURÉE FINALE : 02:41
+   DURÉE DE RÉFÉRENCE : 02:41
 
-   TEST V0.2 :
-   8 mesures / environ 15.48 secondes
-
-   SAFE ZONE :
-   gauche : 80 px
-   droite : 180 px
+   SAFE ZONE VALIDÉE :
+   gauche : 120 px
+   droite : 120 px
    haut   : 90 px
    bas    : 220 px
 
    RÈGLE :
+   - géométrie V0.2 conservée
    - toute l'interface reste dans la safe zone
    - tous les cadres restent dans la safe zone
    - les contenus peuvent être recadrés dans leurs cadres
-   - la grille V0.1 reste l'état de départ
+   - le WAV devient l'horloge maîtresse
+   - l'audiogramme reste provisoire
    ========================================================= */
 
 
@@ -110,8 +109,6 @@ body {
     overflow: hidden;
 
     transform-origin: center center;
-
-    cursor: pointer;
 }
 
 
@@ -157,7 +154,7 @@ body {
    SAFE AREA
 
    Largeur :
-   1080 - 80 - 180 = 820 px
+   1080 - 120 - 120 = 840 px
    ========================================================= */
 
 .safe-area {
@@ -257,7 +254,7 @@ body {
 
 
 /* =========================================================
-   V0.2 — CLASSE COMMUNE DES FENÊTRES
+   CLASSE COMMUNE DES FENÊTRES
    ========================================================= */
 
 .window {
@@ -275,8 +272,7 @@ body {
 
 /* =========================================================
    IMAGE MAJEURE
-
-   État initial = V0.1 validée
+   ÉTAT V0.2 VALIDÉ
    ========================================================= */
 
 .main-image {
@@ -314,8 +310,7 @@ body {
 
 /* =========================================================
    DOCUMENT
-
-   État initial = V0.1 validée
+   ÉTAT V0.2 VALIDÉ
    ========================================================= */
 
 .document {
@@ -355,11 +350,7 @@ body {
 
 /* =========================================================
    VIDEO
-
-   État initial = V0.1 validée
-
-   Superposition sur le coin inférieur droit
-   de l'image majeure.
+   ÉTAT V0.2 VALIDÉ
    ========================================================= */
 
 .video {
@@ -398,15 +389,6 @@ body {
 
 /* =========================================================
    CONTENU INTERNE DES FENÊTRES
-
-   Le cadre peut changer de taille.
-
-   Son contenu peut simultanément :
-   - zoomer
-   - se déplacer
-   - être recadré
-
-   sans jamais sortir visuellement du cadre.
    ========================================================= */
 
 .media-placeholder {
@@ -451,12 +433,6 @@ body {
 
 /* =========================================================
    FUTURS VRAIS MÉDIAS
-
-   Exemple :
-   <img class="media" src="...">
-
-   Le média sera recadré à l'intérieur
-   de la fenêtre.
    ========================================================= */
 
 .media {
@@ -473,8 +449,6 @@ body {
 
 /* =========================================================
    03 — NARRATION
-
-   INCHANGÉE EN V0.2
    ========================================================= */
 
 .script-zone {
@@ -513,6 +487,10 @@ body {
     font-weight: 600;
 
     text-transform: uppercase;
+
+    opacity: 1;
+
+    transform: translateY(0);
 }
 
 
@@ -572,6 +550,8 @@ body {
 
 /* =========================================================
    PLACEHOLDER AUDIOGRAM
+
+   TOUJOURS PUREMENT GRAPHIQUE EN V0.3.
    ========================================================= */
 
 .waveform {
@@ -589,6 +569,8 @@ body {
     gap: 4px;
 
     overflow: hidden;
+
+    cursor: pointer;
 }
 
 
@@ -603,12 +585,15 @@ body {
 
 /* =========================================================
    PLAYHEAD
+
+   En V0.3 sa position est pilotée
+   par audio.currentTime.
    ========================================================= */
 
 .playhead {
     position: absolute;
 
-    left: 42%;
+    left: 0;
 
     top: 48px;
 
@@ -618,13 +603,13 @@ body {
     background: #111;
 
     opacity: 0.7;
+
+    pointer-events: none;
 }
 
 
 /* =========================================================
-   PETITE INDICATION DE TEST V0.2
-
-   Invisible au repos.
+   INDICATEUR DE LECTURE
    ========================================================= */
 
 .play-indicator {
@@ -646,6 +631,53 @@ body {
 
 
 /* =========================================================
+   CONTRÔLES DE TRAVAIL
+
+   PLAY reste dans l'esprit V0.2.
+   PAUSE et RESTART sont ajoutés pour travailler
+   la timeline.
+
+   Ces boutons ne feront pas partie du master final.
+   ========================================================= */
+
+.controls {
+    position: absolute;
+
+    left: 20px;
+    bottom: 45px;
+
+    display: flex;
+
+    gap: 8px;
+
+    z-index: 1000;
+}
+
+
+.control-button {
+    padding: 8px 12px;
+
+    border: 1px solid #111;
+
+    background: transparent;
+    color: #111;
+
+    font-family: inherit;
+
+    font-size: 14px;
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+}
+
+
+.control-button:hover {
+    background: #111;
+    color: #f4f2ed;
+}
+
+
+/* =========================================================
    DEBUG SAFE ZONE
 
    Pour l'afficher :
@@ -657,8 +689,8 @@ body {
 
     position: absolute;
 
-    left: 80px;
-    right: 180px;
+    left: 120px;
+    right: 120px;
 
     top: 90px;
     bottom: 220px;
@@ -669,32 +701,7 @@ body {
 
     z-index: 999;
 }
-.play-button {
-    position: absolute;
 
-    left: 20px;
-    bottom: 45px;
-
-    padding: 8px 12px;
-
-    border: 1px solid #111;
-
-    background: transparent;
-    color: #111;
-
-    font-family: inherit;
-    font-size: 14px;
-    letter-spacing: 1.5px;
-
-    cursor: pointer;
-
-    z-index: 1000;
-}
-
-.play-button:hover {
-    background: #111;
-    color: #f4f2ed;
-}
 </style>
 
 </head>
@@ -723,7 +730,7 @@ body {
          ===================================================== -->
 
     <div class="version">
-        V0.2
+        V0.3
     </div>
 
 
@@ -731,13 +738,62 @@ body {
          INDICATEUR DE LECTURE
          ===================================================== -->
 
-   <div class="play-indicator">
-    PLAY / 124 BPM
-</div>
+    <div class="play-indicator">
+        PLAY / 124 BPM
+    </div>
 
-<button id="playButton" class="play-button">
-    ▶ PLAY
-</button>
+
+    <!-- =====================================================
+         CONTRÔLES
+         ===================================================== -->
+
+    <div class="controls">
+
+        <button
+            id="playButton"
+            class="control-button"
+        >
+            ▶ PLAY
+        </button>
+
+        <button
+            id="pauseButton"
+            class="control-button"
+        >
+            Ⅱ PAUSE
+        </button>
+
+        <button
+            id="restartButton"
+            class="control-button"
+        >
+            ↺ RESTART
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         AUDIO DE RÉFÉRENCE
+
+         GitHub :
+         /audio/maquette.wav
+
+         Il sera remplacé plus tard par la vraie voix.
+         ===================================================== -->
+
+    <audio
+        id="masterAudio"
+        preload="auto"
+    >
+
+        <source
+            src="audio/maquette.wav"
+            type="audio/wav"
+        >
+
+    </audio>
+
 
     <!-- =====================================================
          SAFE AREA
@@ -832,7 +888,7 @@ body {
 
 
         <!-- =================================================
-             SCRIPT
+             SCRIPT / NARRATION DYNAMIQUE
              ================================================= -->
 
         <section class="script-zone">
@@ -843,9 +899,12 @@ body {
             </div>
 
 
-            <div class="script-text">
-                J'AI COMMENCÉ LA MUSIQUE<br>
-                PAR LA BASSE.
+            <div
+                class="script-text"
+                id="scriptText"
+            >
+                J'AI TOUJOURS RÊVÉ<br>
+                D'ÊTRE BATTEUR.
             </div>
 
 
@@ -867,8 +926,11 @@ body {
                 </span>
 
 
-                <span class="audio-time">
-                    00:48.22 / 02:41.00
+                <span
+                    class="audio-time"
+                    id="audioTime"
+                >
+                    00:00.00 / 02:41.00
                 </span>
 
 
@@ -878,10 +940,14 @@ body {
             <div
                 class="waveform"
                 id="waveform"
+                title="Cliquer pour se déplacer dans la maquette"
             ></div>
 
 
-            <div class="playhead"></div>
+            <div
+                class="playhead"
+                id="playhead"
+            ></div>
 
 
         </section>
@@ -899,19 +965,82 @@ body {
 <script>
 
 /* =========================================================
+   V0.3
+   CONFIGURATION GÉNÉRALE
+   ========================================================= */
+
+const BPM = 124;
+
+const BEAT =
+    60 / BPM;
+
+const BAR =
+    BEAT * 4;
+
+
+/*
+   Durée graphique de référence.
+
+   Le navigateur utilisera la durée réelle du WAV
+   dès que ses métadonnées seront chargées.
+*/
+
+const REFERENCE_DURATION =
+    161;
+
+
+/* =========================================================
+   ÉLÉMENTS
+   ========================================================= */
+
+const film =
+    document.getElementById("film");
+
+
+const audio =
+    document.getElementById("masterAudio");
+
+
+const waveform =
+    document.getElementById("waveform");
+
+
+const playhead =
+    document.getElementById("playhead");
+
+
+const audioTime =
+    document.getElementById("audioTime");
+
+
+const scriptText =
+    document.getElementById("scriptText");
+
+
+const playIndicator =
+    document.querySelector(".play-indicator");
+
+
+const playButton =
+    document.getElementById("playButton");
+
+
+const pauseButton =
+    document.getElementById("pauseButton");
+
+
+const restartButton =
+    document.getElementById("restartButton");
+
+
+/* =========================================================
    SCALE
 
-   Le master reste toujours en 1080 × 1920.
-
-   Le navigateur ne fait que réduire
-   son affichage.
+   Le master reste toujours 1080 × 1920.
+   Le navigateur ne fait que réduire son affichage.
    ========================================================= */
 
 function scaleFilm() {
-
-    const film =
-        document.getElementById("film");
-
 
     const masterWidth =
         1080;
@@ -930,7 +1059,10 @@ function scaleFilm() {
 
 
     const scale =
-        Math.min(scaleX, scaleY);
+        Math.min(
+            scaleX,
+            scaleY
+        );
 
 
     film.style.transform =
@@ -947,19 +1079,16 @@ window.addEventListener(
 scaleFilm();
 
 
-
 /* =========================================================
    AUDIOGRAMME PROVISOIRE
 
-   Purement graphique.
+   EXACTEMENT LE MÊME PRINCIPE QUE V0.2.
 
-   Le vrai spectrogramme sera ajouté
-   après le mix voix + musique.
+   Il ne représente PAS le WAV.
+
+   Le véritable audiogramme sera fabriqué
+   après l'enregistrement de la vraie voix.
    ========================================================= */
-
-const waveform =
-    document.getElementById("waveform");
-
 
 const heights = [
 
@@ -1005,47 +1134,359 @@ heights.forEach(height => {
 });
 
 
-
 /* =========================================================
-   V0.2
-   TEMPO / TIMING
+   NARRATION V0.3
+
+   PREMIÈRE GRILLE DE TRAVAIL.
+
+   IMPORTANT :
+   ces timings sont provisoires.
+
+   Ils seront recalés sur :
+   1. la maquette de voix,
+   puis
+   2. la vraie voix de Thomas.
+
+   Les textes sont volontairement divisés
+   en blocs graphiques et non en sous-titres
+   mot à mot.
    ========================================================= */
 
-/*
-   124 BPM
+const narration = [
 
-   1 temps :
-   60 / 124
-   ≈ 0.48387 seconde
+    {
+        start: 0.0,
+        end: 6.0,
+        text:
+            "J'AI TOUJOURS RÊVÉ<br>D'ÊTRE BATTEUR."
+    },
 
-   1 mesure 4/4 :
-   0.48387 × 4
-   ≈ 1.93548 seconde
+    {
+        start: 6.0,
+        end: 12.0,
+        text:
+            "MAIS LES BATTEURS,<br>ÇA PREND DE LA PLACE."
+    },
 
-   8 mesures :
-   ≈ 15.48387 secondes
-*/
+    {
+        start: 12.0,
+        end: 17.5,
+        text:
+            "ET LE BRUIT..."
+    },
 
+    {
+        start: 17.5,
+        end: 23.5,
+        text:
+            "À LA LONGUE,<br>PLUS PERSONNE FINIT<br>PAR NOUS BLAIRER."
+    },
 
-const BEAT =
-    60 / 124;
+    {
+        start: 23.5,
+        end: 29.0,
+        text:
+            "BASSISTE,<br>C'EST PLUS SIMPLE."
+    },
 
+    {
+        start: 29.0,
+        end: 34.0,
+        text:
+            "LES GROUPES<br>NOUS RECHERCHENT."
+    },
 
-const BAR =
-    BEAT * 4;
+    {
+        start: 34.0,
+        end: 41.0,
+        text:
+            "J'AI FAIT DU PUNK,<br>DU SURF-ROCK."
+    },
 
+    {
+        start: 41.0,
+        end: 48.0,
+        text:
+            "ON A ÉTÉ SIGNÉS<br>PAR YAROL POUPAUD."
+    },
+
+    {
+        start: 48.0,
+        end: 53.5,
+        text:
+            "UNE ÉQUIPE<br>DE BÉBÉS ROCKEURS."
+    },
+
+    {
+        start: 53.5,
+        end: 59.5,
+        text:
+            "J'AI JOUÉ AVEC<br>DES GENS CONNUS."
+    },
+
+    {
+        start: 59.5,
+        end: 64.0,
+        text:
+            "COMME<br>MICHEL GONDRY."
+    },
+
+    {
+        start: 64.0,
+        end: 70.5,
+        text:
+            "CLARA LUCIANI M'A FAIT<br>TENIR LA BASSE."
+    },
+
+    {
+        start: 70.5,
+        end: 77.0,
+        text:
+            "J'EN AVAIS MARRE<br>DES GENS CÉLÈBRES."
+    },
+
+    {
+        start: 77.0,
+        end: 82.0,
+        text:
+            "J'AI DÉMISSIONNÉ."
+    },
+
+    {
+        start: 82.0,
+        end: 89.0,
+        text:
+            "JE RESTAIS CHEZ MOI<br>AVEC MES COPINES."
+    },
+
+    {
+        start: 89.0,
+        end: 96.0,
+        text:
+            "ON ENREGISTRAIT DES TRUCS<br>SOUS DES NOMS OBSCURS."
+    },
+
+    {
+        start: 96.0,
+        end: 102.5,
+        text:
+            "LE NOM ÉVOLUAIT<br>EN FONCTION DES RUPTURES."
+    },
+
+    {
+        start: 102.5,
+        end: 109.0,
+        text:
+            "TOUT LE MONDE S'EST MIS<br>À CHERCHER DU TRAVAIL."
+    },
+
+    {
+        start: 109.0,
+        end: 115.0,
+        text:
+            "ON N'AVAIT PLUS LE TEMPS<br>D'AVOIR UN GROUPE."
+    },
+
+    {
+        start: 115.0,
+        end: 121.0,
+        text:
+            "LA DISPARITION<br>DES GROUPES."
+    },
+
+    {
+        start: 121.0,
+        end: 126.0,
+        text:
+            "ET PUIS LA MUSIQUE<br>EST REVENUE."
+    },
+
+    {
+        start: 126.0,
+        end: 131.0,
+        text:
+            "MAIS LES GROUPES,<br>BEAUCOUP MOINS."
+    },
+
+    {
+        start: 131.0,
+        end: 137.0,
+        text:
+            "UN TYPE TOUT SEUL<br>DERRIÈRE SES MACHINES."
+    },
+
+    {
+        start: 137.0,
+        end: 142.0,
+        text:
+            "AVEC LA NOSTALGIE<br>DE L'ACOUSTIQUE."
+    },
+
+    {
+        start: 142.0,
+        end: 147.0,
+        text:
+            "ALORS J'AI COMMENCÉ<br>À FAIRE AUTREMENT."
+    },
+
+    {
+        start: 147.0,
+        end: 151.0,
+        text:
+            "À PRODUIRE SEUL.<br>À ENREGISTRER SEUL."
+    },
+
+    {
+        start: 151.0,
+        end: 154.0,
+        text:
+            "MÉNAGE SAMEDI."
+    },
+
+    {
+        start: 154.0,
+        end: 157.0,
+        text:
+            "AUSTRALOPUNCKTECH."
+    },
+
+    {
+        start: 157.0,
+        end: 159.0,
+        text:
+            "ÉLECTRONIQUE<br>MÉLANCOLIQUE MUSIQUE."
+    },
+
+    {
+        start: 159.0,
+        end: 161.0,
+        text:
+            "J'AI RECOMMENCÉ<br>À FAIRE DE LA MUSIQUE."
+    }
+
+];
 
 
 /* =========================================================
-   TIMELINE V0.2
+   CHANGEMENT DE BLOC NARRATIF
 
-   Elle est PAUSED au chargement.
-
-   Un clic sur le film lance ou relance
-   les huit mesures.
+   On mémorise l'index courant afin de ne pas
+   relancer l'animation à chaque frame.
    ========================================================= */
 
-const demo =
+let currentNarrationIndex =
+    -1;
+
+
+function getNarrationIndex(time) {
+
+    return narration.findIndex(block =>
+
+        time >= block.start &&
+        time < block.end
+
+    );
+
+}
+
+
+function showNarration(index) {
+
+    if (
+        index === currentNarrationIndex
+    ) {
+        return;
+    }
+
+
+    currentNarrationIndex =
+        index;
+
+
+    /*
+       Aucun bloc :
+       on laisse la zone respirer.
+    */
+
+    if (index === -1) {
+
+        gsap.to(
+            scriptText,
+            {
+                opacity: 0,
+                y: 8,
+                duration: 0.18
+            }
+        );
+
+        return;
+    }
+
+
+    const block =
+        narration[index];
+
+
+    /*
+       Sortie courte de l'ancien bloc.
+    */
+
+    gsap.to(
+        scriptText,
+        {
+            opacity: 0,
+            y: -8,
+
+            duration: 0.12,
+
+            overwrite: true,
+
+            onComplete: () => {
+
+                scriptText.innerHTML =
+                    block.text;
+
+
+                gsap.set(
+                    scriptText,
+                    {
+                        y: 10
+                    }
+                );
+
+
+                gsap.to(
+                    scriptText,
+                    {
+                        opacity: 1,
+                        y: 0,
+
+                        duration: 0.22,
+
+                        ease: "power2.out"
+                    }
+                );
+
+            }
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TIMELINE VISUELLE V0.3
+
+   On conserve le langage de mouvement de la V0.2.
+
+   Différence fondamentale :
+   cette timeline ne se lit plus toute seule.
+
+   Elle est synchronisée en permanence
+   sur audio.currentTime.
+   ========================================================= */
+
+const visualTimeline =
     gsap.timeline({
 
         paused: true,
@@ -1057,18 +1498,12 @@ const demo =
     });
 
 
+/* ---------------------------------------------------------
+   00:00 → ~00:04
+   Respiration des contenus
+   --------------------------------------------------------- */
 
-/* =========================================================
-   MESURES 1–2
-   00:00 → 00:03.87
-
-   La grille ne bouge pratiquement pas.
-
-   Les contenus commencent simplement
-   à respirer à l'intérieur des cadres.
-   ========================================================= */
-
-demo.to(
+visualTimeline.to(
     ".main-image .media-placeholder",
     {
         scale: 1.04,
@@ -1081,7 +1516,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".video .media-placeholder",
     {
         scale: 1.06,
@@ -1094,7 +1529,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".document .media-placeholder",
     {
         scale: 1.025,
@@ -1107,20 +1542,12 @@ demo.to(
 );
 
 
+/* ---------------------------------------------------------
+   ~00:04
+   IMAGE prend du poids
+   --------------------------------------------------------- */
 
-/* =========================================================
-   MESURES 3–4
-   00:03.87 → 00:07.74
-
-   IMAGE MAJEURE prend davantage de poids.
-
-   Le document se resserre légèrement.
-
-   Toutes les fenêtres restent
-   dans la safe zone.
-   ========================================================= */
-
-demo.to(
+visualTimeline.to(
     ".main-image",
     {
         width: 580,
@@ -1134,7 +1561,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".main-image .media-placeholder",
     {
         scale: 1.10,
@@ -1148,7 +1575,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".document",
     {
         width: 190,
@@ -1161,7 +1588,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".document .media-placeholder",
     {
         scale: 1.08,
@@ -1175,7 +1602,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".document",
     {
         opacity: 0.72,
@@ -1188,23 +1615,18 @@ demo.to(
 );
 
 
+/* ---------------------------------------------------------
+   ~00:08
+   VIDEO devient dominante
 
-/* =========================================================
-   MESURES 5–6
-   00:07.74 → 00:11.61
+   Safe zone = 840 px.
+   left 200 + width 640 = 840.
+   --------------------------------------------------------- */
 
-   VIDEO devient dominante.
-
-   IMPORTANT :
-   sa limite droite reste à 820 px.
-
-   left 180 + width 640 = 820
-   ========================================================= */
-
-demo.to(
+visualTimeline.to(
     ".video",
     {
-        left: 180,
+        left: 200,
         top: 430,
 
         width: 640,
@@ -1218,7 +1640,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".video .media-placeholder",
     {
         scale: 1.14,
@@ -1232,7 +1654,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".main-image",
     {
         width: 470,
@@ -1246,7 +1668,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".main-image .media-placeholder",
     {
         scale: 1.06,
@@ -1260,15 +1682,12 @@ demo.to(
 );
 
 
+/* ---------------------------------------------------------
+   ~00:12 → ~00:15.5
+   Retour à la géométrie V0.2 validée
+   --------------------------------------------------------- */
 
-/* =========================================================
-   MESURES 7–8
-   00:11.61 → 00:15.48
-
-   Retour exact à la composition V0.1.
-   ========================================================= */
-
-demo.to(
+visualTimeline.to(
     ".main-image",
     {
         width: 520,
@@ -1282,7 +1701,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".document",
     {
         width: 220,
@@ -1296,7 +1715,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".video",
     {
         left: 300,
@@ -1313,7 +1732,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".main-image .media-placeholder",
     {
         scale: 1,
@@ -1327,7 +1746,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".document .media-placeholder",
     {
         scale: 1,
@@ -1341,7 +1760,7 @@ demo.to(
 );
 
 
-demo.to(
+visualTimeline.to(
     ".video .media-placeholder",
     {
         scale: 1,
@@ -1355,33 +1774,410 @@ demo.to(
 );
 
 
-
 /* =========================================================
-   INDICATEUR PLAY
+   IMPORTANT
+
+   Pour V0.3, le cycle visuel de V0.2 est répété
+   sur la durée de la maquette.
+
+   Plus tard, nous remplacerons cette répétition
+   par de vrais événements liés aux archives :
+   Michel Gondry, Clara Luciani, groupes,
+   machines, pochettes, etc.
    ========================================================= */
 
-const playIndicator =
-    document.querySelector(".play-indicator");
+const VISUAL_CYCLE =
+    BAR * 8;
 
 
-demo.eventCallback(
-    "onStart",
-    () => {
+/* =========================================================
+   FORMATAGE TIMECODE
 
-        gsap.to(
-            playIndicator,
-            {
-                opacity: 0.45,
-                duration: 0.2
-            }
+   Exemple :
+   48.22 secondes -> 00:48.22
+   ========================================================= */
+
+function formatTime(seconds) {
+
+    if (
+        !Number.isFinite(seconds) ||
+        seconds < 0
+    ) {
+        seconds = 0;
+    }
+
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+
+    const secs =
+        Math.floor(seconds % 60);
+
+
+    const hundredths =
+        Math.floor(
+            (seconds % 1) * 100
         );
+
+
+    return (
+        String(minutes).padStart(2, "0")
+        +
+        ":"
+        +
+        String(secs).padStart(2, "0")
+        +
+        "."
+        +
+        String(hundredths).padStart(2, "0")
+    );
+
+}
+
+
+/* =========================================================
+   DURÉE RÉELLE
+
+   Dès que le WAV est chargé, sa durée réelle
+   remplace les 161 secondes de référence.
+   ========================================================= */
+
+function getDuration() {
+
+    if (
+        Number.isFinite(audio.duration) &&
+        audio.duration > 0
+    ) {
+        return audio.duration;
+    }
+
+
+    return REFERENCE_DURATION;
+
+}
+
+
+/* =========================================================
+   SYNCHRONISATION PRINCIPALE
+
+   audio.currentTime est l'horloge maîtresse.
+
+   Cette fonction pilote :
+   - timecode
+   - playhead
+   - narration
+   - animation des fenêtres
+   ========================================================= */
+
+function syncFilm() {
+
+    const time =
+        audio.currentTime || 0;
+
+
+    const duration =
+        getDuration();
+
+
+    /* ------------------------------------------------------
+       TIMECODE
+       ------------------------------------------------------ */
+
+    audioTime.textContent =
+        `${formatTime(time)} / ${formatTime(duration)}`;
+
+
+    /* ------------------------------------------------------
+       PLAYHEAD
+       ------------------------------------------------------ */
+
+    const progress =
+        Math.max(
+            0,
+            Math.min(
+                1,
+                time / duration
+            )
+        );
+
+
+    const waveformWidth =
+        waveform.clientWidth;
+
+
+    const playheadX =
+        progress * waveformWidth;
+
+
+    playhead.style.left =
+        playheadX + "px";
+
+
+    /* ------------------------------------------------------
+       NARRATION
+       ------------------------------------------------------ */
+
+    const narrationIndex =
+        getNarrationIndex(time);
+
+
+    showNarration(
+        narrationIndex
+    );
+
+
+    /* ------------------------------------------------------
+       MOUVEMENTS DES FENÊTRES
+
+       On reprend le cycle de V0.2,
+       mais il est maintenant asservi au WAV.
+       ------------------------------------------------------ */
+
+    const cycleTime =
+        time % VISUAL_CYCLE;
+
+
+    visualTimeline.time(
+        cycleTime,
+        false
+    );
+
+
+    /* ------------------------------------------------------
+       Continuer tant que le WAV joue
+       ------------------------------------------------------ */
+
+    if (!audio.paused) {
+
+        requestAnimationFrame(
+            syncFilm
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   PLAY
+   ========================================================= */
+
+playButton.addEventListener(
+    "click",
+    async (event) => {
+
+        event.stopPropagation();
+
+
+        try {
+
+            await audio.play();
+
+
+            gsap.to(
+                playIndicator,
+                {
+                    opacity: 0.45,
+                    duration: 0.2
+                }
+            );
+
+
+            requestAnimationFrame(
+                syncFilm
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Lecture audio impossible :",
+                error
+            );
+
+        }
 
     }
 );
 
 
-demo.eventCallback(
-    "onComplete",
+/* =========================================================
+   PAUSE
+   ========================================================= */
+
+pauseButton.addEventListener(
+    "click",
+    (event) => {
+
+        event.stopPropagation();
+
+
+        audio.pause();
+
+
+        gsap.to(
+            playIndicator,
+            {
+                opacity: 0.15,
+                duration: 0.2
+            }
+        );
+
+
+        syncFilm();
+
+    }
+);
+
+
+/* =========================================================
+   RESTART
+
+   Retour à 00:00 puis lecture.
+   ========================================================= */
+
+restartButton.addEventListener(
+    "click",
+    async (event) => {
+
+        event.stopPropagation();
+
+
+        audio.pause();
+
+
+        audio.currentTime =
+            0;
+
+
+        currentNarrationIndex =
+            -1;
+
+
+        syncFilm();
+
+
+        try {
+
+            await audio.play();
+
+
+            gsap.to(
+                playIndicator,
+                {
+                    opacity: 0.45,
+                    duration: 0.2
+                }
+            );
+
+
+            requestAnimationFrame(
+                syncFilm
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Lecture audio impossible :",
+                error
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SCRUB
+
+   On peut cliquer dans l'audiogramme provisoire
+   pour se déplacer dans la maquette.
+
+   Très utile pour travailler la V0.3.
+   ========================================================= */
+
+waveform.addEventListener(
+    "click",
+    (event) => {
+
+        const rect =
+            waveform.getBoundingClientRect();
+
+
+        const x =
+            event.clientX - rect.left;
+
+
+        const ratio =
+            Math.max(
+                0,
+                Math.min(
+                    1,
+                    x / rect.width
+                )
+            );
+
+
+        audio.currentTime =
+            ratio * getDuration();
+
+
+        currentNarrationIndex =
+            -1;
+
+
+        syncFilm();
+
+    }
+);
+
+
+/* =========================================================
+   MÉTADONNÉES AUDIO CHARGÉES
+   ========================================================= */
+
+audio.addEventListener(
+    "loadedmetadata",
+    () => {
+
+        syncFilm();
+
+    }
+);
+
+
+/* =========================================================
+   SEEK
+
+   Permet au film de se remettre immédiatement
+   au bon état lorsqu'on change de position.
+   ========================================================= */
+
+audio.addEventListener(
+    "seeked",
+    () => {
+
+        currentNarrationIndex =
+            -1;
+
+
+        syncFilm();
+
+    }
+);
+
+
+/* =========================================================
+   FIN
+   ========================================================= */
+
+audio.addEventListener(
+    "ended",
     () => {
 
         gsap.to(
@@ -1392,37 +2188,20 @@ demo.eventCallback(
             }
         );
 
+
+        syncFilm();
+
     }
 );
-
 
 
 /* =========================================================
-   CLIC = PLAY / REPLAY
-
-   Chaque clic :
-   - remet la timeline à zéro
-   - restaure son état initial
-   - relance les 8 mesures
+   ÉTAT INITIAL
    ========================================================= */
 
-const film =
-    document.getElementById("film");
+visualTimeline.pause(0);
 
-
-const playButton =
-    document.getElementById("playButton");
-
-playButton.addEventListener(
-    "click",
-    (event) => {
-
-        event.stopPropagation();
-
-        demo.restart();
-
-    }
-);
+syncFilm();
 
 </script>
 
