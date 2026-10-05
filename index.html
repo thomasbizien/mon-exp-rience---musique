@@ -10,24 +10,29 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>
-Mon expérience dans la musique — v0.1
-</title>
-
+<title>Mon expérience dans la musique — v0.1</title>
 
 <style>
 
 /* =========================================================
    MON EXPÉRIENCE DANS LA MUSIQUE
-   V0.1 — STATIC GRID
+   V0.1 — GRILLE STATIQUE
 
    MASTER : 1080 × 1920
    TEMPO  : 124 BPM
    DURÉE  : 02:41
 
-   Principe :
-   - informations importantes = SAFE
-   - archives = peuvent déborder
+   SAFE ZONE :
+   gauche : 80 px
+   droite : 180 px
+   haut   : 90 px
+   bas    : 220 px
+
+   RÈGLE :
+   - toute l'interface reste dans la safe zone
+   - tous les cadres restent dans la safe zone
+   - seuls les contenus futurs des cadres pourront
+     être recadrés à l'intérieur de ceux-ci
    ========================================================= */
 
 
@@ -39,10 +44,8 @@ Mon expérience dans la musique — v0.1
     box-sizing: border-box;
 }
 
-
 html,
 body {
-
     margin: 0;
 
     width: 100%;
@@ -60,16 +63,11 @@ body {
 }
 
 
-
 /* =========================================================
    VIEWPORT
-
-   Le master reste réellement en 1080 × 1920.
-   Le navigateur ne fait que le réduire pour l'affichage.
    ========================================================= */
 
 .viewport {
-
     width: 100vw;
     height: 100vh;
 
@@ -78,48 +76,77 @@ body {
     justify-content: center;
     align-items: center;
 
+    overflow: hidden;
 }
 
 
-
 /* =========================================================
-   MASTER FILM
+   MASTER 1080 × 1920
    ========================================================= */
 
 #film {
-
     position: relative;
 
     width: 1080px;
     height: 1920px;
 
-    flex-shrink: 0;
+    flex: 0 0 auto;
 
     background: #f4f2ed;
-
     color: #111;
 
     overflow: hidden;
 
     transform-origin: center center;
-
 }
 
+
+/* =========================================================
+   SIGNATURE
+   ========================================================= */
+
+.signature {
+    position: absolute;
+
+    top: 20px;
+    left: 20px;
+
+    font-size: 14px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    opacity: 0.45;
+}
+
+
+/* =========================================================
+   VERSION
+   ========================================================= */
+
+.version {
+    position: absolute;
+
+    right: 20px;
+    bottom: 20px;
+
+    font-size: 14px;
+
+    letter-spacing: 1px;
+
+    opacity: 0.35;
+}
 
 
 /* =========================================================
    SAFE AREA
 
-   80 px à gauche
-   180 px à droite
-
-   Les informations importantes restent dans cette zone.
-
-   Les archives pourront cependant en sortir.
+   Largeur :
+   1080 - 80 - 180 = 820 px
    ========================================================= */
 
 .safe-area {
-
     position: absolute;
 
     left: 80px;
@@ -128,84 +155,94 @@ body {
     top: 90px;
     bottom: 220px;
 
+    min-width: 0;
+
     display: grid;
 
     grid-template-rows:
         80px
-        1fr
+        minmax(0, 1fr)
         290px
         150px;
 
     gap: 28px;
-
 }
 
 
+/* Toutes les sections structurelles
+   sont strictement limitées à la safe zone */
+
+.metadata,
+.archive-zone,
+.script-zone,
+.audio-zone {
+    width: 100%;
+    max-width: 100%;
+
+    min-width: 0;
+}
+
 
 /* =========================================================
-   01 — METADATA
+   01 — HEADER
    ========================================================= */
 
 .metadata {
-
     display: grid;
 
     grid-template-columns:
         minmax(0, 1fr)
         auto;
 
-    gap: 40px;
+    column-gap: 30px;
 
-    align-items: flex-start;
+    align-items: start;
+
+    overflow: hidden;
 
     border-top: 2px solid #111;
 
     padding-top: 15px;
 
-    font-size: 22px;
+    font-size: 20px;
 
-    letter-spacing: 1.8px;
+    letter-spacing: 1.6px;
 
     text-transform: uppercase;
+}
+
+.metadata > * {
+    min-width: 0;
+}
+
+.metadata-title {
+    white-space: nowrap;
+}
+
+.metadata-right {
+    text-align: right;
 
     white-space: nowrap;
 
+    font-size: 18px;
 }
-
-
-.metadata-right {
-
-    text-align: right;
-
-}
-
 
 
 /* =========================================================
    02 — ARCHIVE ZONE
 
    IMPORTANT :
-
-   overflow: visible
-
-   Les archives ne sont PAS contraintes
-   par la safe zone.
-
-   Elles peuvent sortir à droite.
-   Le cadre 1080 × 1920 les coupera ensuite.
+   tous les CADRES restent dans les 820 px.
    ========================================================= */
 
 .archive-zone {
-
     position: relative;
+
+    overflow: hidden;
 
     border-top: 1px solid #aaa;
     border-bottom: 1px solid #aaa;
-
-    overflow: visible;
-
 }
-
 
 
 /* =========================================================
@@ -213,175 +250,203 @@ body {
    ========================================================= */
 
 .main-image {
-
     position: absolute;
 
     left: 0;
     top: 70px;
 
-    width: 610px;
+    width: 520px;
     height: 600px;
 
     border: 2px solid #111;
+
+    background: #e9e7e1;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    background: #e9e7e1;
+    overflow: hidden;
+
+    z-index: 1;
 
     font-size: 28px;
 
     letter-spacing: 2px;
-
 }
 
-
 .main-image::before {
-
     content: "01 / IMAGE";
 
     position: absolute;
 
     left: 0;
-    top: -34px;
+    top: 0;
+
+    transform: translateY(-34px);
 
     font-size: 17px;
 
     letter-spacing: 2px;
-
 }
 
+
+/* Label séparé car le cadre lui-même
+   utilise overflow:hidden */
+
+.image-label {
+    position: absolute;
+
+    left: 0;
+    top: 36px;
+
+    z-index: 5;
+
+    font-size: 17px;
+
+    letter-spacing: 2px;
+}
 
 
 /* =========================================================
    DOCUMENT
-
-   Positionné depuis la GAUCHE.
-
-   Il peut donc volontairement sortir
-   de la safe zone vers la droite.
    ========================================================= */
 
 .document {
-
     position: absolute;
 
-    left: 800px;
-    top: 160px;
+    right: 0;
+    top: 150px;
 
-    width: 280px;
-    height: 470px;
+    width: 220px;
+    height: 450px;
 
     border: 2px solid #111;
+
+    background: #dedcd6;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    background: #dedcd6;
+    overflow: hidden;
 
-    font-size: 24px;
+    z-index: 1;
 
-    letter-spacing: 2px;
+    font-size: 22px;
 
+    letter-spacing: 1.5px;
 }
 
-
-.document::before {
-
-    content: "02 / DOCUMENT";
-
+.document-label {
     position: absolute;
 
-    left: 0;
-    top: -34px;
+    right: 0;
+    top: 116px;
+
+    width: 220px;
+
+    z-index: 5;
 
     font-size: 17px;
 
     letter-spacing: 2px;
-
 }
-
 
 
 /* =========================================================
    VIDEO
 
-   Même principe :
-   position absolue depuis la gauche.
+   Superposée au coin inférieur droit
+   de l'image majeure.
 
-   La vidéo peut sortir du cadre.
+   Le cadre reste entièrement dans
+   la safe zone.
    ========================================================= */
 
 .video {
-
     position: absolute;
 
-    left: 460px;
-    bottom: 70px;
+    left: 320px;
+    top: 500px;
 
-    width: 650px;
-    height: 365px;
+    width: 500px;
+    height: 281px;
 
     border: 2px solid #111;
+
+    background: #222;
+    color: #f4f2ed;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    background: #222;
+    overflow: hidden;
 
-    color: #f4f2ed;
+    z-index: 3;
 
     font-size: 28px;
 
     letter-spacing: 2px;
-
 }
 
-
-.video::before {
-
-    content: "03 / VIDEO";
-
+.video-label {
     position: absolute;
 
-    left: 0;
-    top: -34px;
+    left: 320px;
+    top: 466px;
 
-    color: #111;
+    z-index: 5;
 
     font-size: 17px;
 
     letter-spacing: 2px;
-
 }
 
+
+/* =========================================================
+   FUTURS MÉDIAS
+
+   Lorsqu'on ajoutera les vraies images/vidéos,
+   elles seront recadrées DANS les cadres.
+
+   Exemple :
+
+   <img src="..." class="media">
+
+   ========================================================= */
+
+.media {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    inset: 0;
+
+    object-fit: cover;
+}
 
 
 /* =========================================================
    03 — NARRATION
-
-   Le texte reste strictement dans la safe zone.
    ========================================================= */
 
 .script-zone {
-
     position: relative;
+
+    overflow: hidden;
 
     border-top: 2px solid #111;
 
     padding-top: 30px;
-
 }
 
-
 .script-label {
-
     margin-bottom: 24px;
 
     font-size: 17px;
@@ -389,15 +454,12 @@ body {
     letter-spacing: 2px;
 
     text-transform: uppercase;
-
 }
 
-
 .script-text {
-
     width: 100%;
 
-    max-width: 820px;
+    min-width: 0;
 
     font-size: 48px;
 
@@ -408,35 +470,35 @@ body {
     font-weight: 600;
 
     text-transform: uppercase;
-
 }
-
 
 
 /* =========================================================
    04 — AUDIO
-
-   Toujours SOUS le texte.
-
-   Pour l'instant :
-   waveform graphique provisoire.
-
-   Le spectrogramme définitif sera généré
-   après ajout de la voix et mix final.
    ========================================================= */
 
 .audio-zone {
-
     position: relative;
+
+    overflow: hidden;
 
     border-top: 2px solid #111;
 
     padding-top: 16px;
-
 }
 
 
+/* =========================================================
+   AUDIO METADATA
+
+   Les deux informations doivent toujours
+   rester visibles.
+   ========================================================= */
+
 .audio-meta {
+    width: 100%;
+
+    min-width: 0;
 
     display: grid;
 
@@ -444,52 +506,58 @@ body {
         minmax(0, 1fr)
         auto;
 
-    gap: 30px;
+    column-gap: 24px;
+
+    align-items: start;
 
     margin-bottom: 20px;
 
-    font-size: 17px;
+    font-size: 16px;
 
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
+}
 
+.audio-meta > * {
+    min-width: 0;
+}
+
+.audio-time {
     white-space: nowrap;
 
+    text-align: right;
 }
 
 
-
 /* =========================================================
-   PLACEHOLDER WAVEFORM
+   PLACEHOLDER AUDIOGRAM
+
+   Pas encore le spectrogramme final.
    ========================================================= */
 
 .waveform {
-
     position: relative;
 
     width: 100%;
+    max-width: 100%;
+
     height: 55px;
 
     display: flex;
 
     align-items: center;
 
-    gap: 5px;
+    gap: 4px;
 
     overflow: hidden;
-
 }
-
 
 .bar {
+    width: 6px;
 
-    width: 7px;
-
-    flex-shrink: 0;
+    flex: 0 0 6px;
 
     background: #111;
-
 }
-
 
 
 /* =========================================================
@@ -497,69 +565,29 @@ body {
    ========================================================= */
 
 .playhead {
-
     position: absolute;
 
     left: 42%;
 
-    bottom: 0;
+    top: 48px;
 
     width: 2px;
-    height: 85px;
+    height: 75px;
 
     background: #111;
 
+    opacity: 0.7;
 }
-
 
 
 /* =========================================================
-   DEBUG / MASTER INFO
-   ========================================================= */
+   DEBUG SAFE ZONE
 
-.corner {
-
-    position: absolute;
-
-    font-size: 14px;
-
-    letter-spacing: 1px;
-
-    opacity: 0.45;
-
-}
-
-
-.corner.tl {
-
-    top: 20px;
-    left: 20px;
-
-}
-
-
-.corner.br {
-
-    bottom: 20px;
-    right: 20px;
-
-}
-
-
-
-/* =========================================================
-   OPTIONAL SAFE ZONE DEBUG
-
-   Pour l'afficher plus tard :
-   ajouter la classe "debug" à #film.
-
-   Exemple :
+   Pour afficher la safe zone :
    <main id="film" class="debug">
-
    ========================================================= */
 
-.debug::after {
-
+#film.debug::after {
     content: "";
 
     position: absolute;
@@ -575,14 +603,11 @@ body {
     pointer-events: none;
 
     z-index: 999;
-
 }
-
 
 </style>
 
 </head>
-
 
 
 <body>
@@ -594,19 +619,18 @@ body {
 <main id="film">
 
 
-    <!-- =====================================================
-         MASTER INFO
-         ===================================================== -->
+    <!-- SIGNATURE -->
 
-    <div class="corner tl">
+    <div class="signature">
         THOMAS BIZIEN
     </div>
 
 
-    <div class="corner br">
+    <!-- VERSION -->
+
+    <div class="version">
         V0.1
     </div>
-
 
 
     <!-- =====================================================
@@ -616,30 +640,22 @@ body {
     <div class="safe-area">
 
 
-
         <!-- =================================================
              HEADER
              ================================================= -->
 
         <header class="metadata">
 
-
-            <div>
+            <div class="metadata-title">
                 MON EXPÉRIENCE DANS LA MUSIQUE
             </div>
 
-
             <div class="metadata-right">
-
                 ARCHIVE_0037<br>
-
                 2004
-
             </div>
 
-
         </header>
-
 
 
         <!-- =================================================
@@ -649,31 +665,40 @@ body {
         <section class="archive-zone">
 
 
+            <!-- IMAGE -->
+
+            <div class="image-label">
+                01 / IMAGE
+            </div>
+
             <div class="main-image">
-
                 IMAGE MAJEURE
-
             </div>
 
 
+            <!-- DOCUMENT -->
+
+            <div class="document-label">
+                02 / DOCUMENT
+            </div>
 
             <div class="document">
-
                 DOCUMENT
-
             </div>
 
 
+            <!-- VIDEO -->
+
+            <div class="video-label">
+                03 / VIDEO
+            </div>
 
             <div class="video">
-
                 VIDEO SD
-
             </div>
 
 
         </section>
-
 
 
         <!-- =================================================
@@ -682,24 +707,16 @@ body {
 
         <section class="script-zone">
 
-
             <div class="script-label">
-
                 04 / NARRATION
-
             </div>
-
 
             <div class="script-text">
-
-                J'AI COMMENCÉ LA MUSIQUE
+                J'AI COMMENCÉ LA MUSIQUE<br>
                 PAR LA BASSE.
-
             </div>
 
-
         </section>
-
 
 
         <!-- =================================================
@@ -711,34 +728,21 @@ body {
 
             <div class="audio-meta">
 
-
                 <span>
-
                     AUDIO / 124 BPM
-
                 </span>
 
-
-                <span>
-
+                <span class="audio-time">
                     00:48.22 / 02:41.00
-
                 </span>
-
 
             </div>
-
 
 
             <div
                 class="waveform"
                 id="waveform"
-            >
-
-                <!-- Généré par JavaScript -->
-
-            </div>
-
+            ></div>
 
 
             <div class="playhead"></div>
@@ -756,49 +760,36 @@ body {
 </div>
 
 
-
 <script>
 
-
 /* =========================================================
-   SCALE MASTER
+   SCALE
 
-   Le document reste TOUJOURS en 1080 × 1920.
-
-   On adapte seulement son affichage
-   à la fenêtre du navigateur.
+   Le master reste réellement à 1080 × 1920.
    ========================================================= */
 
 function scaleFilm() {
 
-
     const film =
         document.getElementById("film");
-
 
     const masterWidth =
         1080;
 
-
     const masterHeight =
         1920;
-
 
     const scaleX =
         window.innerWidth / masterWidth;
 
-
     const scaleY =
         window.innerHeight / masterHeight;
-
 
     const scale =
         Math.min(scaleX, scaleY);
 
-
     film.style.transform =
         `scale(${scale})`;
-
 }
 
 
@@ -813,27 +804,16 @@ scaleFilm();
 
 
 /* =========================================================
-   PLACEHOLDER AUDIO
+   AUDIOGRAMME PROVISOIRE
 
-   Ce signal est uniquement graphique.
+   Purement graphique.
 
-   Il NE représente PAS encore
-   le morceau définitif.
-
-   MUSIQUE :
-   124 BPM
-
-   DURÉE :
-   02:41
-
-   Le vrai spectrogramme sera calculé
-   à partir du mix final musique + voix.
+   Le spectrogramme réel sera produit
+   à la fin à partir du mix voix + musique.
    ========================================================= */
-
 
 const waveform =
     document.getElementById("waveform");
-
 
 
 const heights = [
@@ -853,35 +833,28 @@ const heights = [
     43,52,36,24,17,30,49,55,40,27,
 
     18,30,47,52,34,22,16,29,45,53,
-    38,24,19,33,48,42,27,17,26,41
+    38,24,19,33,48,42,27,17,26,41,
+
+    31,48,54,39,23,16,27,43,51,35,
+    21,15,29,46,55,37,24,18,33,49
 
 ];
 
 
+heights.forEach(height => {
 
-heights.forEach(
+    const bar =
+        document.createElement("div");
 
-    height => {
+    bar.className =
+        "bar";
 
+    bar.style.height =
+        height + "px";
 
-        const bar =
-            document.createElement("div");
+    waveform.appendChild(bar);
 
-
-        bar.className =
-            "bar";
-
-
-        bar.style.height =
-            height + "px";
-
-
-        waveform.appendChild(bar);
-
-    }
-
-);
-
+});
 
 </script>
 
