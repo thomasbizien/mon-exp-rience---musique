@@ -365,11 +365,11 @@ body {
 .video {
     position: absolute;
 
-    left: 320px;
-    top: 500px;
+    left: 280px;
+    top: 485px;
 
-    width: 500px;
-    height: 281px;
+    width: 540px;
+    height: 330px;
 
     border: 2px solid #111;
 
@@ -385,8 +385,8 @@ body {
 .video-label {
     position: absolute;
 
-    left: 320px;
-    top: 466px;
+    left: 280px;
+    top: 451px;
 
     z-index: 10;
 
@@ -669,7 +669,32 @@ body {
 
     z-index: 999;
 }
+.play-button {
+    position: absolute;
 
+    left: 20px;
+    bottom: 45px;
+
+    padding: 8px 12px;
+
+    border: 1px solid #111;
+
+    background: transparent;
+    color: #111;
+
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    z-index: 1000;
+}
+
+.play-button:hover {
+    background: #111;
+    color: #f4f2ed;
+}
 </style>
 
 </head>
@@ -706,10 +731,13 @@ body {
          INDICATEUR DE LECTURE
          ===================================================== -->
 
-    <div class="play-indicator">
-        PLAY / 124 BPM
-    </div>
+   <div class="play-indicator">
+    PLAY / 124 BPM
+</div>
 
+<button id="playButton" class="play-button">
+    ▶ PLAY
+</button>
 
     <!-- =====================================================
          SAFE AREA
@@ -1271,11 +1299,11 @@ demo.to(
 demo.to(
     ".video",
     {
-        left: 320,
-        top: 500,
+        left: 280,
+        top: 485,
 
-        width: 500,
-        height: 281,
+        width: 540,
+        height: 330,
 
         duration: BAR * 2,
 
@@ -1382,9 +1410,14 @@ const film =
     document.getElementById("film");
 
 
-film.addEventListener(
+const playButton =
+    document.getElementById("playButton");
+
+playButton.addEventListener(
     "click",
-    () => {
+    (event) => {
+
+        event.stopPropagation();
 
         demo.restart();
 
