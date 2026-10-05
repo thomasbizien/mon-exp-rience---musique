@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mon expérience dans la musique — v0.1</title>
+
+<style>
+
+/* =========================================================
+   V0.1 — STATIC GRID
+   MASTER FORMAT : 1080 × 1920
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #d8d8d8;
+    overflow: hidden;
+    font-family:
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif;
+}
+
+/* ---------------------------------------------------------
+   VIEWPORT
+   Permet de voir le 1080 × 1920 entier sur n'importe quel écran
+   --------------------------------------------------------- */
+
+.viewport {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ---------------------------------------------------------
+   MASTER FRAME
+   --------------------------------------------------------- */
+
+#film {
+
+    position: relative;
+
+    width: 1080px;
+    height: 1920px;
+
+    flex-shrink: 0;
+
+    background: #f4f2ed;
+    color: #111;
+
+    overflow: hidden;
+
+    transform-origin: center center;
+}
+
+/* ---------------------------------------------------------
+   SAFE AREA
+   --------------------------------------------------------- */
+
+.safe-area {
+
+    position: absolute;
+
+    left: 70px;
+    right: 70px;
+    top: 70px;
+    bottom: 170px;
+
+    display: grid;
+
+    grid-template-rows:
+        80px
+        1fr
+        290px
+        150px;
+
+    gap: 28px;
+}
+
+/* =========================================================
+   01 — METADATA
+   ========================================================= */
+
+.metadata {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    border-top: 2px solid #111;
+
+    padding-top: 15px;
+
+    font-size: 22px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+.metadata-right {
+    text-align: right;
+}
+
+/* =========================================================
+   02 — VISUAL ARCHIVE AREA
+   ========================================================= */
+
+.archive-zone {
+
+    position: relative;
+
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+
+    overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   MAIN IMAGE
+   --------------------------------------------------------- */
+
+.main-image {
+
+    position: absolute;
+
+    left: 0;
+    top: 70px;
+
+    width: 610px;
+    height: 600px;
+
+    border: 2px solid #111;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+    letter-spacing: 2px;
+
+    background: #e9e7e1;
+}
+
+.main-image::before {
+
+    content: "01 / IMAGE";
+
+    position: absolute;
+
+    left: 0;
+    top: -34px;
+
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
+/* ---------------------------------------------------------
+   DOCUMENT
+   --------------------------------------------------------- */
+
+.document {
+
+    position: absolute;
+
+    right: 0;
+    top: 160px;
+
+    width: 280px;
+    height: 470px;
+
+    border: 2px solid #111;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+    letter-spacing: 2px;
+
+    background: #dedcd6;
+}
+
+.document::before {
+
+    content: "02 / DOCUMENT";
+
+    position: absolute;
+
+    left: 0;
+    top: -34px;
+
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
+/* ---------------------------------------------------------
+   VIDEO
+   --------------------------------------------------------- */
+
+.video {
+
+    position: absolute;
+
+    right: 60px;
+    bottom: 70px;
+
+    width: 650px;
+    height: 365px;
+
+    border: 2px solid #111;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+    letter-spacing: 2px;
+
+    background: #222;
+    color: #f4f2ed;
+}
+
+.video::before {
+
+    content: "03 / VIDEO";
+
+    position: absolute;
+
+    left: 0;
+    top: -34px;
+
+    color: #111;
+
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
+/* =========================================================
+   03 — SCRIPT
+   ========================================================= */
+
+.script-zone {
+
+    position: relative;
+
+    border-top: 2px solid #111;
+
+    padding-top: 30px;
+}
+
+.script-label {
+
+    font-size: 17px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 24px;
+
+    text-transform: uppercase;
+}
+
+.script-text {
+
+    max-width: 850px;
+
+    font-size: 48px;
+
+    line-height: 1.08;
+
+    letter-spacing: -1px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   04 — AUDIO
+   ========================================================= */
+
+.audio-zone {
+
+    border-top: 2px solid #111;
+
+    padding-top: 16px;
+}
+
+.audio-meta {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 17px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 20px;
+}
+
+/* ---------------------------------------------------------
+   PLACEHOLDER AUDIO
+   Ce n'est PAS le spectrogramme définitif.
+   --------------------------------------------------------- */
+
+.waveform {
+
+    height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    overflow: hidden;
+}
+
+.bar {
+
+    width: 7px;
+
+    background: #111;
+}
+
+/* =========================================================
+   TIMECODE / PLAYHEAD
+   ========================================================= */
+
+.playhead {
+
+    position: absolute;
+
+    left: 42%;
+
+    bottom: 0;
+
+    width: 2px;
+    height: 85px;
+
+    background: #111;
+}
+
+/* =========================================================
+   DEBUG MARKERS
+   ========================================================= */
+
+.corner {
+
+    position: absolute;
+
+    font-size: 14px;
+
+    letter-spacing: 1px;
+
+    opacity: .45;
+}
+
+.corner.tl {
+    top: 20px;
+    left: 20px;
+}
+
+.corner.br {
+    bottom: 20px;
+    right: 20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="viewport">
+
+<main id="film">
+
+    <div class="corner tl">
+        MASTER / 1080×1920
+    </div>
+
+    <div class="corner br">
+        V0.1
+    </div>
+
+
+    <div class="safe-area">
+
+
+        <!-- =============================================
+             HEADER
+             ============================================= -->
+
+        <header class="metadata">
+
+            <div>
+                MON EXPÉRIENCE DANS LA MUSIQUE
+            </div>
+
+            <div class="metadata-right">
+                ARCHIVE_0037<br>
+                2004
+            </div>
+
+        </header>
+
+
+        <!-- =============================================
+             ARCHIVES
+             ============================================= -->
+
+        <section class="archive-zone">
+
+            <div class="main-image">
+                IMAGE MAJEURE
+            </div>
+
+            <div class="document">
+                DOCUMENT
+            </div>
+
+            <div class="video">
+                VIDEO SD
+            </div>
+
+        </section>
+
+
+        <!-- =============================================
+             SCRIPT
+             ============================================= -->
+
+        <section class="script-zone">
+
+            <div class="script-label">
+                04 / NARRATION
+            </div>
+
+            <div class="script-text">
+                J'ai commencé la musique
+                par la basse.
+            </div>
+
+        </section>
+
+
+        <!-- =============================================
+             AUDIO
+             ============================================= -->
+
+        <section class="audio-zone">
+
+            <div class="audio-meta">
+
+                <span>
+                    AUDIO / 124 BPM
+                </span>
+
+                <span>
+                    00:48.22 / 02:41.00
+                </span>
+
+            </div>
+
+
+            <div class="waveform" id="waveform">
+
+                <!-- généré par JS -->
+
+            </div>
+
+            <div class="playhead"></div>
+
+        </section>
+
+
+    </div>
+
+</main>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   SCALE
+   Le master reste toujours 1080 × 1920.
+   On ne fait que réduire son affichage.
+   ========================================================= */
+
+function scaleFilm() {
+
+    const film = document.getElementById("film");
+
+    const masterWidth = 1080;
+    const masterHeight = 1920;
+
+    const scaleX = window.innerWidth / masterWidth;
+    const scaleY = window.innerHeight / masterHeight;
+
+    const scale = Math.min(scaleX, scaleY);
+
+    film.style.transform = `scale(${scale})`;
+}
+
+window.addEventListener("resize", scaleFilm);
+
+scaleFilm();
+
+
+/* =========================================================
+   PLACEHOLDER WAVEFORM
+
+   Purement graphique pour V0.1.
+   Le véritable spectrogramme sera ajouté
+   après mix final voix + musique.
+   ========================================================= */
+
+const waveform = document.getElementById("waveform");
+
+const heights = [
+    12,18,26,38,52,31,20,44,55,36,
+    22,16,29,48,54,41,25,19,33,51,
+    42,28,17,23,39,55,46,30,21,14,
+    28,43,52,36,24,18,31,49,55,40,
+    27,16,25,38,50,44,32,20,14,29,
+    47,55,39,25,17,30,42,51,35,22,
+    15,27,46,53,37,24,18,32,48,41,
+    26,16,23,39,54,45,31,20,14,28,
+    43,52,36,24,17,30,49,55,40,27
+];
+
+heights.forEach(height => {
+
+    const bar = document.createElement("div");
+
+    bar.className = "bar";
+
+    bar.style.height = height + "px";
+
+    waveform.appendChild(bar);
+
+});
+
+</script>
+
+</body>
+</html>
