@@ -1,69 +1,31 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Mon expérience dans la musique — v0.3</title>
 
-<!-- ========================================================
-     GSAP
-     Moteur d'animation des fenêtres
-     ======================================================== -->
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 
 <style>
 
 /* =========================================================
-   MON EXPÉRIENCE DANS LA MUSIQUE
-   V0.3 — TIMELINE AUDIO + NARRATION
-
+   V0.3
    MASTER : 1080 × 1920
-   TEMPO  : 124 BPM
-   DURÉE DE RÉFÉRENCE : 02:41
-
-   SAFE ZONE VALIDÉE :
-   gauche : 120 px
-   droite : 120 px
-   haut   : 90 px
-   bas    : 220 px
-
-   RÈGLE :
-   - géométrie V0.2 conservée
-   - toute l'interface reste dans la safe zone
-   - tous les cadres restent dans la safe zone
-   - les contenus peuvent être recadrés dans leurs cadres
-   - le WAV devient l'horloge maîtresse
-   - l'audiogramme reste provisoire
-   ========================================================= */
-
-
-/* =========================================================
-   RESET
+   SAFE ZONE : 120 px gauche / droite
    ========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
-
 html,
 body {
     margin: 0;
-
     width: 100%;
     height: 100%;
-
     background: #d8d8d8;
-
     overflow: hidden;
 
     font-family:
@@ -83,7 +45,6 @@ body {
     height: 100vh;
 
     display: flex;
-
     justify-content: center;
     align-items: center;
 
@@ -92,7 +53,7 @@ body {
 
 
 /* =========================================================
-   MASTER 1080 × 1920
+   MASTER
    ========================================================= */
 
 #film {
@@ -113,47 +74,35 @@ body {
 
 
 /* =========================================================
-   SIGNATURE
+   SIGNATURE / VERSION
    ========================================================= */
 
 .signature {
     position: absolute;
-
     top: 20px;
     left: 20px;
 
     font-size: 14px;
-
     letter-spacing: 1.5px;
-
     text-transform: uppercase;
 
-    opacity: 0.45;
+    opacity: .45;
 }
-
-
-/* =========================================================
-   VERSION
-   ========================================================= */
 
 .version {
     position: absolute;
-
     right: 20px;
     bottom: 20px;
 
     font-size: 14px;
-
     letter-spacing: 1px;
 
-    opacity: 0.35;
+    opacity: .35;
 }
 
 
 /* =========================================================
    SAFE AREA
-
-   Largeur :
    1080 - 120 - 120 = 840 px
    ========================================================= */
 
@@ -166,8 +115,6 @@ body {
     top: 90px;
     bottom: 220px;
 
-    min-width: 0;
-
     display: grid;
 
     grid-template-rows:
@@ -177,8 +124,9 @@ body {
         150px;
 
     gap: 28px;
-}
 
+    min-width: 0;
+}
 
 .metadata,
 .archive-zone,
@@ -186,13 +134,12 @@ body {
 .audio-zone {
     width: 100%;
     max-width: 100%;
-
     min-width: 0;
 }
 
 
 /* =========================================================
-   01 — HEADER
+   HEADER
    ========================================================= */
 
 .metadata {
@@ -213,26 +160,17 @@ body {
     padding-top: 15px;
 
     font-size: 20px;
-
     letter-spacing: 1.6px;
 
     text-transform: uppercase;
 }
 
-
-.metadata > * {
-    min-width: 0;
-}
-
-
 .metadata-title {
     white-space: nowrap;
 }
 
-
 .metadata-right {
     text-align: right;
-
     white-space: nowrap;
 
     font-size: 18px;
@@ -240,7 +178,7 @@ body {
 
 
 /* =========================================================
-   02 — ARCHIVE ZONE
+   ARCHIVE ZONE
    ========================================================= */
 
 .archive-zone {
@@ -254,25 +192,8 @@ body {
 
 
 /* =========================================================
-   CLASSE COMMUNE DES FENÊTRES
-   ========================================================= */
-
-.window {
-    transform-origin: center center;
-
-    will-change:
-        transform,
-        width,
-        height,
-        left,
-        top,
-        opacity;
-}
-
-
-/* =========================================================
-   IMAGE MAJEURE
-   ÉTAT V0.2 VALIDÉ
+   IMAGE
+   V0.2 VALIDÉE
    ========================================================= */
 
 .main-image {
@@ -291,8 +212,9 @@ body {
     overflow: hidden;
 
     z-index: 1;
-}
 
+    transform-origin: center;
+}
 
 .image-label {
     position: absolute;
@@ -303,14 +225,13 @@ body {
     z-index: 10;
 
     font-size: 17px;
-
     letter-spacing: 2px;
 }
 
 
 /* =========================================================
    DOCUMENT
-   ÉTAT V0.2 VALIDÉ
+   V0.2 VALIDÉE
    ========================================================= */
 
 .document {
@@ -329,8 +250,9 @@ body {
     overflow: hidden;
 
     z-index: 1;
-}
 
+    transform-origin: center;
+}
 
 .document-label {
     position: absolute;
@@ -343,14 +265,13 @@ body {
     z-index: 10;
 
     font-size: 17px;
-
     letter-spacing: 2px;
 }
 
 
 /* =========================================================
    VIDEO
-   ÉTAT V0.2 VALIDÉ
+   V0.2 VALIDÉE
    ========================================================= */
 
 .video {
@@ -370,8 +291,9 @@ body {
     overflow: hidden;
 
     z-index: 3;
-}
 
+    transform-origin: center;
+}
 
 .video-label {
     position: absolute;
@@ -382,13 +304,12 @@ body {
     z-index: 10;
 
     font-size: 17px;
-
     letter-spacing: 2px;
 }
 
 
 /* =========================================================
-   CONTENU INTERNE DES FENÊTRES
+   PLACEHOLDERS
    ========================================================= */
 
 .media-placeholder {
@@ -396,43 +317,35 @@ body {
 
     inset: 0;
 
-    width: 100%;
-    height: 100%;
-
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    transform-origin: center center;
+    width: 100%;
+    height: 100%;
 
-    will-change: transform;
+    transform-origin: center;
 }
-
 
 .main-image .media-placeholder {
     font-size: 28px;
-
     letter-spacing: 2px;
 }
 
-
 .document .media-placeholder {
     font-size: 22px;
-
     letter-spacing: 1.5px;
 }
 
-
 .video .media-placeholder {
     font-size: 28px;
-
     letter-spacing: 2px;
 }
 
 
 /* =========================================================
-   FUTURS VRAIS MÉDIAS
+   FUTURS MÉDIAS
    ========================================================= */
 
 .media {
@@ -448,7 +361,7 @@ body {
 
 
 /* =========================================================
-   03 — NARRATION
+   NARRATION
    ========================================================= */
 
 .script-zone {
@@ -461,22 +374,17 @@ body {
     padding-top: 30px;
 }
 
-
 .script-label {
     margin-bottom: 24px;
 
     font-size: 17px;
-
     letter-spacing: 2px;
 
     text-transform: uppercase;
 }
 
-
 .script-text {
     width: 100%;
-
-    min-width: 0;
 
     font-size: 48px;
 
@@ -489,13 +397,11 @@ body {
     text-transform: uppercase;
 
     opacity: 1;
-
-    transform: translateY(0);
 }
 
 
 /* =========================================================
-   04 — AUDIO
+   AUDIO
    ========================================================= */
 
 .audio-zone {
@@ -508,16 +414,7 @@ body {
     padding-top: 16px;
 }
 
-
-/* =========================================================
-   AUDIO METADATA
-   ========================================================= */
-
 .audio-meta {
-    width: 100%;
-
-    min-width: 0;
-
     display: grid;
 
     grid-template-columns:
@@ -526,40 +423,26 @@ body {
 
     column-gap: 24px;
 
-    align-items: start;
-
     margin-bottom: 20px;
 
     font-size: 16px;
-
     letter-spacing: 1.5px;
 }
 
-
-.audio-meta > * {
-    min-width: 0;
-}
-
-
 .audio-time {
-    white-space: nowrap;
-
     text-align: right;
+    white-space: nowrap;
 }
 
 
 /* =========================================================
-   PLACEHOLDER AUDIOGRAM
-
-   TOUJOURS PUREMENT GRAPHIQUE EN V0.3.
+   AUDIOGRAMME FACTICE
    ========================================================= */
 
 .waveform {
     position: relative;
 
     width: 100%;
-    max-width: 100%;
-
     height: 55px;
 
     display: flex;
@@ -573,7 +456,6 @@ body {
     cursor: pointer;
 }
 
-
 .bar {
     width: 6px;
 
@@ -585,16 +467,12 @@ body {
 
 /* =========================================================
    PLAYHEAD
-
-   En V0.3 sa position est pilotée
-   par audio.currentTime.
    ========================================================= */
 
 .playhead {
     position: absolute;
 
     left: 0;
-
     top: 48px;
 
     width: 2px;
@@ -602,42 +480,14 @@ body {
 
     background: #111;
 
-    opacity: 0.7;
+    opacity: .75;
 
     pointer-events: none;
 }
 
 
 /* =========================================================
-   INDICATEUR DE LECTURE
-   ========================================================= */
-
-.play-indicator {
-    position: absolute;
-
-    left: 20px;
-    bottom: 20px;
-
-    font-size: 14px;
-
-    letter-spacing: 1.2px;
-
-    opacity: 0;
-
-    text-transform: uppercase;
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   CONTRÔLES DE TRAVAIL
-
-   PLAY reste dans l'esprit V0.2.
-   PAUSE et RESTART sont ajoutés pour travailler
-   la timeline.
-
-   Ces boutons ne feront pas partie du master final.
+   CONTROLS
    ========================================================= */
 
 .controls {
@@ -650,12 +500,11 @@ body {
 
     gap: 8px;
 
-    z-index: 1000;
+    z-index: 100;
 }
 
-
 .control-button {
-    padding: 8px 12px;
+    padding: 8px 11px;
 
     border: 1px solid #111;
 
@@ -664,12 +513,11 @@ body {
 
     font-family: inherit;
 
-    font-size: 14px;
-    letter-spacing: 1.5px;
+    font-size: 13px;
+    letter-spacing: 1.2px;
 
     cursor: pointer;
 }
-
 
 .control-button:hover {
     background: #111;
@@ -678,56 +526,45 @@ body {
 
 
 /* =========================================================
-   DEBUG SAFE ZONE
-
-   Pour l'afficher :
-   <main id="film" class="debug">
+   DIAGNOSTIC
    ========================================================= */
 
-#film.debug::after {
-    content: "";
-
+.status {
     position: absolute;
 
-    left: 120px;
-    right: 120px;
+    left: 20px;
+    bottom: 85px;
 
-    top: 90px;
-    bottom: 220px;
+    max-width: 900px;
 
-    border: 2px dashed rgba(255, 0, 0, 0.45);
+    font-size: 13px;
+    letter-spacing: 1px;
 
-    pointer-events: none;
+    opacity: .55;
 
-    z-index: 999;
+    z-index: 100;
+}
+
+.status.error {
+    opacity: 1;
+    font-weight: 600;
 }
 
 </style>
-
 </head>
 
 
 <body>
 
-
 <div class="viewport">
-
 
 <main id="film">
 
-
-    <!-- =====================================================
-         SIGNATURE
-         ===================================================== -->
 
     <div class="signature">
         THOMAS BIZIEN
     </div>
 
-
-    <!-- =====================================================
-         VERSION
-         ===================================================== -->
 
     <div class="version">
         V0.3
@@ -735,64 +572,60 @@ body {
 
 
     <!-- =====================================================
-         INDICATEUR DE LECTURE
-         ===================================================== -->
-
-    <div class="play-indicator">
-        PLAY / 124 BPM
-    </div>
-
-
-    <!-- =====================================================
-         CONTRÔLES
-         ===================================================== -->
-
-    <div class="controls">
-
-        <button
-            id="playButton"
-            class="control-button"
-        >
-            ▶ PLAY
-        </button>
-
-        <button
-            id="pauseButton"
-            class="control-button"
-        >
-            Ⅱ PAUSE
-        </button>
-
-        <button
-            id="restartButton"
-            class="control-button"
-        >
-            ↺ RESTART
-        </button>
-
-    </div>
-
-
-    <!-- =====================================================
-         AUDIO DE RÉFÉRENCE
-
-         GitHub :
-         /audio/maquette.wav
-
-         Il sera remplacé plus tard par la vraie voix.
+         AUDIO MASTER
          ===================================================== -->
 
     <audio
         id="masterAudio"
         preload="auto"
     >
-
         <source
             src="audio/maquette.mp3"
             type="audio/mpeg"
         >
-
     </audio>
+
+
+    <!-- =====================================================
+         DIAGNOSTIC
+         ===================================================== -->
+
+    <div
+        class="status"
+        id="status"
+    >
+        AUDIO : CHARGEMENT…
+    </div>
+
+
+    <!-- =====================================================
+         CONTROLS
+         ===================================================== -->
+
+    <div class="controls">
+
+        <button
+            class="control-button"
+            id="playButton"
+        >
+            ▶ PLAY
+        </button>
+
+        <button
+            class="control-button"
+            id="pauseButton"
+        >
+            Ⅱ PAUSE
+        </button>
+
+        <button
+            class="control-button"
+            id="restartButton"
+        >
+            ↺ RESTART
+        </button>
+
+    </div>
 
 
     <!-- =====================================================
@@ -808,17 +641,14 @@ body {
 
         <header class="metadata">
 
-
             <div class="metadata-title">
                 MON EXPÉRIENCE DANS LA MUSIQUE
             </div>
-
 
             <div class="metadata-right">
                 ARCHIVE_2007<br>
                 2026
             </div>
-
 
         </header>
 
@@ -830,16 +660,15 @@ body {
         <section class="archive-zone">
 
 
-            <!-- =============================================
-                 IMAGE
-                 ============================================= -->
-
             <div class="image-label">
                 01 / IMAGE
             </div>
 
 
-            <div class="main-image window">
+            <div
+                class="main-image"
+                id="mainImage"
+            >
 
                 <div class="media-placeholder">
                     IMAGE MAJEURE
@@ -848,16 +677,15 @@ body {
             </div>
 
 
-            <!-- =============================================
-                 DOCUMENT
-                 ============================================= -->
-
             <div class="document-label">
                 02 / DOCUMENT
             </div>
 
 
-            <div class="document window">
+            <div
+                class="document"
+                id="documentWindow"
+            >
 
                 <div class="media-placeholder">
                     DOCUMENT
@@ -866,16 +694,15 @@ body {
             </div>
 
 
-            <!-- =============================================
-                 VIDEO
-                 ============================================= -->
-
             <div class="video-label">
                 03 / VIDEO
             </div>
 
 
-            <div class="video window">
+            <div
+                class="video"
+                id="videoWindow"
+            >
 
                 <div class="media-placeholder">
                     VIDEO SD
@@ -888,16 +715,14 @@ body {
 
 
         <!-- =================================================
-             SCRIPT / NARRATION DYNAMIQUE
+             NARRATION
              ================================================= -->
 
         <section class="script-zone">
 
-
             <div class="script-label">
                 04 / NARRATION
             </div>
-
 
             <div
                 class="script-text"
@@ -906,7 +731,6 @@ body {
                 J'AI TOUJOURS RÊVÉ<br>
                 D'ÊTRE BATTEUR.
             </div>
-
 
         </section>
 
@@ -920,11 +744,9 @@ body {
 
             <div class="audio-meta">
 
-
                 <span>
                     PARIS M'EMMERDE
                 </span>
-
 
                 <span
                     class="audio-time"
@@ -933,14 +755,12 @@ body {
                     00:00.00 / 02:41.00
                 </span>
 
-
             </div>
 
 
             <div
                 class="waveform"
                 id="waveform"
-                title="Cliquer pour se déplacer dans la maquette"
             ></div>
 
 
@@ -955,9 +775,7 @@ body {
 
     </div>
 
-
 </main>
-
 
 </div>
 
@@ -965,129 +783,89 @@ body {
 <script>
 
 /* =========================================================
-   V0.3
-   CONFIGURATION GÉNÉRALE
+   CONFIG
    ========================================================= */
 
 const BPM = 124;
 
-const BEAT =
-    60 / BPM;
+const BEAT = 60 / BPM;
 
-const BAR =
-    BEAT * 4;
-
-
-/*
-   Durée graphique de référence.
-
-   Le navigateur utilisera la durée réelle du WAV
-   dès que ses métadonnées seront chargées.
-*/
-
-const REFERENCE_DURATION =
-    161;
+const REFERENCE_DURATION = 161;
 
 
 /* =========================================================
-   ÉLÉMENTS
+   ELEMENTS
    ========================================================= */
 
 const film =
     document.getElementById("film");
 
-
 const audio =
     document.getElementById("masterAudio");
 
-
-const waveform =
-    document.getElementById("waveform");
-
-
-const playhead =
-    document.getElementById("playhead");
-
-
-const audioTime =
-    document.getElementById("audioTime");
-
-
-const scriptText =
-    document.getElementById("scriptText");
-
-
-const playIndicator =
-    document.querySelector(".play-indicator");
-
+const status =
+    document.getElementById("status");
 
 const playButton =
     document.getElementById("playButton");
 
-
 const pauseButton =
     document.getElementById("pauseButton");
-
 
 const restartButton =
     document.getElementById("restartButton");
 
+const waveform =
+    document.getElementById("waveform");
+
+const playhead =
+    document.getElementById("playhead");
+
+const audioTime =
+    document.getElementById("audioTime");
+
+const scriptText =
+    document.getElementById("scriptText");
+
+const mainImage =
+    document.getElementById("mainImage");
+
+const documentWindow =
+    document.getElementById("documentWindow");
+
+const videoWindow =
+    document.getElementById("videoWindow");
+
 
 /* =========================================================
-   SCALE
-
-   Le master reste toujours 1080 × 1920.
-   Le navigateur ne fait que réduire son affichage.
+   SCALE 1080 × 1920
    ========================================================= */
 
 function scaleFilm() {
 
-    const masterWidth =
-        1080;
-
-
-    const masterHeight =
-        1920;
-
-
     const scaleX =
-        window.innerWidth / masterWidth;
-
+        window.innerWidth / 1080;
 
     const scaleY =
-        window.innerHeight / masterHeight;
-
+        window.innerHeight / 1920;
 
     const scale =
-        Math.min(
-            scaleX,
-            scaleY
-        );
-
+        Math.min(scaleX, scaleY);
 
     film.style.transform =
         `scale(${scale})`;
 }
-
 
 window.addEventListener(
     "resize",
     scaleFilm
 );
 
-
 scaleFilm();
 
 
 /* =========================================================
-   AUDIOGRAMME PROVISOIRE
-
-   EXACTEMENT LE MÊME PRINCIPE QUE V0.2.
-
-   Il ne représente PAS le WAV.
-
-   Le véritable audiogramme sera fabriqué
-   après l'enregistrement de la vraie voix.
+   AUDIOGRAMME PLACEHOLDER
    ========================================================= */
 
 const heights = [
@@ -1114,20 +892,16 @@ const heights = [
 
 ];
 
-
 heights.forEach(height => {
 
     const bar =
         document.createElement("div");
 
-
     bar.className =
         "bar";
 
-
     bar.style.height =
-        height + "px";
-
+        `${height}px`;
 
     waveform.appendChild(bar);
 
@@ -1135,231 +909,189 @@ heights.forEach(height => {
 
 
 /* =========================================================
-   NARRATION V0.3
+   NARRATION
 
-   PREMIÈRE GRILLE DE TRAVAIL.
-
-   IMPORTANT :
-   ces timings sont provisoires.
-
-   Ils seront recalés sur :
-   1. la maquette de voix,
-   puis
-   2. la vraie voix de Thomas.
-
-   Les textes sont volontairement divisés
-   en blocs graphiques et non en sous-titres
-   mot à mot.
+   TIMINGS PROVISOIRES
    ========================================================= */
 
 const narration = [
 
     {
-        start: 0.0,
-        end: 6.0,
+        start: 0,
         text:
             "J'AI TOUJOURS RÊVÉ<br>D'ÊTRE BATTEUR."
     },
 
     {
-        start: 6.0,
-        end: 12.0,
+        start: 6,
         text:
             "MAIS LES BATTEURS,<br>ÇA PREND DE LA PLACE."
     },
 
     {
-        start: 12.0,
-        end: 17.5,
+        start: 12,
         text:
             "ET LE BRUIT..."
     },
 
     {
         start: 17.5,
-        end: 23.5,
         text:
             "À LA LONGUE,<br>PLUS PERSONNE FINIT<br>PAR NOUS BLAIRER."
     },
 
     {
         start: 23.5,
-        end: 29.0,
         text:
             "BASSISTE,<br>C'EST PLUS SIMPLE."
     },
 
     {
-        start: 29.0,
-        end: 34.0,
+        start: 29,
         text:
             "LES GROUPES<br>NOUS RECHERCHENT."
     },
 
     {
-        start: 34.0,
-        end: 41.0,
+        start: 34,
         text:
             "J'AI FAIT DU PUNK,<br>DU SURF-ROCK."
     },
 
     {
-        start: 41.0,
-        end: 48.0,
+        start: 41,
         text:
             "ON A ÉTÉ SIGNÉS<br>PAR YAROL POUPAUD."
     },
 
     {
-        start: 48.0,
-        end: 53.5,
+        start: 48,
         text:
             "UNE ÉQUIPE<br>DE BÉBÉS ROCKEURS."
     },
 
     {
         start: 53.5,
-        end: 59.5,
         text:
             "J'AI JOUÉ AVEC<br>DES GENS CONNUS."
     },
 
     {
         start: 59.5,
-        end: 64.0,
         text:
             "COMME<br>MICHEL GONDRY."
     },
 
     {
-        start: 64.0,
-        end: 70.5,
+        start: 64,
         text:
             "CLARA LUCIANI M'A FAIT<br>TENIR LA BASSE."
     },
 
     {
         start: 70.5,
-        end: 77.0,
         text:
             "J'EN AVAIS MARRE<br>DES GENS CÉLÈBRES."
     },
 
     {
-        start: 77.0,
-        end: 82.0,
+        start: 77,
         text:
             "J'AI DÉMISSIONNÉ."
     },
 
     {
-        start: 82.0,
-        end: 89.0,
+        start: 82,
         text:
             "JE RESTAIS CHEZ MOI<br>AVEC MES COPINES."
     },
 
     {
-        start: 89.0,
-        end: 96.0,
+        start: 89,
         text:
             "ON ENREGISTRAIT DES TRUCS<br>SOUS DES NOMS OBSCURS."
     },
 
     {
-        start: 96.0,
-        end: 102.5,
+        start: 96,
         text:
             "LE NOM ÉVOLUAIT<br>EN FONCTION DES RUPTURES."
     },
 
     {
         start: 102.5,
-        end: 109.0,
         text:
             "TOUT LE MONDE S'EST MIS<br>À CHERCHER DU TRAVAIL."
     },
 
     {
-        start: 109.0,
-        end: 115.0,
+        start: 109,
         text:
             "ON N'AVAIT PLUS LE TEMPS<br>D'AVOIR UN GROUPE."
     },
 
     {
-        start: 115.0,
-        end: 121.0,
+        start: 115,
         text:
             "LA DISPARITION<br>DES GROUPES."
     },
 
     {
-        start: 121.0,
-        end: 126.0,
+        start: 121,
         text:
             "ET PUIS LA MUSIQUE<br>EST REVENUE."
     },
 
     {
-        start: 126.0,
-        end: 131.0,
+        start: 126,
         text:
             "MAIS LES GROUPES,<br>BEAUCOUP MOINS."
     },
 
     {
-        start: 131.0,
-        end: 137.0,
+        start: 131,
         text:
             "UN TYPE TOUT SEUL<br>DERRIÈRE SES MACHINES."
     },
 
     {
-        start: 137.0,
-        end: 142.0,
+        start: 137,
         text:
             "AVEC LA NOSTALGIE<br>DE L'ACOUSTIQUE."
     },
 
     {
-        start: 142.0,
-        end: 147.0,
+        start: 142,
         text:
             "ALORS J'AI COMMENCÉ<br>À FAIRE AUTREMENT."
     },
 
     {
-        start: 147.0,
-        end: 151.0,
+        start: 147,
         text:
             "À PRODUIRE SEUL.<br>À ENREGISTRER SEUL."
     },
 
     {
-        start: 151.0,
-        end: 154.0,
+        start: 151,
         text:
             "MÉNAGE SAMEDI."
     },
 
     {
-        start: 154.0,
-        end: 157.0,
+        start: 154,
         text:
             "AUSTRALOPUNCKTECH."
     },
 
     {
-        start: 157.0,
-        end: 159.0,
+        start: 157,
         text:
             "ÉLECTRONIQUE<br>MÉLANCOLIQUE MUSIQUE."
     },
 
     {
-        start: 159.0,
-        end: 161.0,
+        start: 159,
         text:
             "J'AI RECOMMENCÉ<br>À FAIRE DE LA MUSIQUE."
     }
@@ -1368,68 +1100,51 @@ const narration = [
 
 
 /* =========================================================
-   CHANGEMENT DE BLOC NARRATIF
-
-   On mémorise l'index courant afin de ne pas
-   relancer l'animation à chaque frame.
+   NARRATION ACTIVE
    ========================================================= */
 
-let currentNarrationIndex =
-    -1;
+let narrationIndex = -1;
 
 
-function getNarrationIndex(time) {
+function updateNarration(time) {
 
-    return narration.findIndex(block =>
+    let newIndex = 0;
 
-        time >= block.start &&
-        time < block.end
+    for (
+        let i = 0;
+        i < narration.length;
+        i++
+    ) {
 
-    );
+        if (
+            time >= narration[i].start
+        ) {
 
-}
+            newIndex = i;
 
+        } else {
 
-function showNarration(index) {
+            break;
+
+        }
+
+    }
+
 
     if (
-        index === currentNarrationIndex
+        newIndex === narrationIndex
     ) {
         return;
     }
 
 
-    currentNarrationIndex =
-        index;
+    narrationIndex =
+        newIndex;
 
 
-    /*
-       Aucun bloc :
-       on laisse la zone respirer.
-    */
+    const newText =
+        narration[newIndex].text;
 
-    if (index === -1) {
-
-        gsap.to(
-            scriptText,
-            {
-                opacity: 0,
-                y: 8,
-                duration: 0.18
-            }
-        );
-
-        return;
-    }
-
-
-    const block =
-        narration[index];
-
-
-    /*
-       Sortie courte de l'ancien bloc.
-    */
 
     gsap.to(
         scriptText,
@@ -1437,14 +1152,14 @@ function showNarration(index) {
             opacity: 0,
             y: -8,
 
-            duration: 0.12,
+            duration: .12,
 
             overwrite: true,
 
             onComplete: () => {
 
                 scriptText.innerHTML =
-                    block.text;
+                    newText;
 
 
                 gsap.set(
@@ -1461,13 +1176,14 @@ function showNarration(index) {
                         opacity: 1,
                         y: 0,
 
-                        duration: 0.22,
+                        duration: .22,
 
                         ease: "power2.out"
                     }
                 );
 
             }
+
         }
     );
 
@@ -1475,326 +1191,109 @@ function showNarration(index) {
 
 
 /* =========================================================
-   TIMELINE VISUELLE V0.3
+   ANIMATION DES FENÊTRES
 
-   On conserve le langage de mouvement de la V0.2.
+   IMPORTANT :
+   On ne dépend PLUS d'une timeline GSAP externe.
 
-   Différence fondamentale :
-   cette timeline ne se lit plus toute seule.
+   L'état visuel est calculé directement
+   à partir de audio.currentTime.
 
-   Elle est synchronisée en permanence
-   sur audio.currentTime.
+   Donc si le son est à 34.2 secondes,
+   l'image correspond forcément à 34.2 secondes.
    ========================================================= */
 
-const visualTimeline =
-    gsap.timeline({
+function updateWindows(time) {
 
-        paused: true,
+    /*
+       Mouvement très lent.
 
-        defaults: {
-            overwrite: "auto"
-        }
+       Les trois valeurs utilisent des phases
+       différentes pour éviter un mouvement
+       mécanique parfaitement synchrone.
+    */
 
-    });
+    const imageWave =
+        Math.sin(time * 0.45);
 
 
-/* ---------------------------------------------------------
-   00:00 → ~00:04
-   Respiration des contenus
-   --------------------------------------------------------- */
+    const documentWave =
+        Math.sin(time * 0.37 + 1.8);
 
-visualTimeline.to(
-    ".main-image .media-placeholder",
-    {
-        scale: 1.04,
 
-        duration: BAR * 2,
+    const videoWave =
+        Math.sin(time * 0.41 + 3.1);
 
-        ease: "sine.inOut"
-    },
-    0
-);
 
+    /* ------------------------------------------------------
+       IMAGE
+       ------------------------------------------------------ */
 
-visualTimeline.to(
-    ".video .media-placeholder",
-    {
-        scale: 1.06,
+    const imageScale =
+        1 + imageWave * 0.018;
 
-        duration: BAR * 2,
 
-        ease: "sine.inOut"
-    },
-    0
-);
+    const imageX =
+        imageWave * 8;
 
 
-visualTimeline.to(
-    ".document .media-placeholder",
-    {
-        scale: 1.025,
+    const imageY =
+        Math.cos(time * 0.31) * 5;
 
-        duration: BAR * 2,
 
-        ease: "sine.inOut"
-    },
-    0
-);
+    mainImage.style.transform =
+        `translate(${imageX}px, ${imageY}px)
+         scale(${imageScale})`;
 
 
-/* ---------------------------------------------------------
-   ~00:04
-   IMAGE prend du poids
-   --------------------------------------------------------- */
+    /* ------------------------------------------------------
+       DOCUMENT
+       ------------------------------------------------------ */
 
-visualTimeline.to(
-    ".main-image",
-    {
-        width: 580,
-        height: 640,
+    const documentScale =
+        1 + documentWave * 0.022;
 
-        duration: BAR,
 
-        ease: "power3.inOut"
-    },
-    BAR * 2
-);
+    const documentX =
+        documentWave * 7;
 
 
-visualTimeline.to(
-    ".main-image .media-placeholder",
-    {
-        scale: 1.10,
-        x: -12,
+    const documentY =
+        Math.cos(time * 0.27 + 1) * 8;
 
-        duration: BAR * 2,
 
-        ease: "sine.inOut"
-    },
-    BAR * 2
-);
+    documentWindow.style.transform =
+        `translate(${documentX}px, ${documentY}px)
+         scale(${documentScale})`;
 
 
-visualTimeline.to(
-    ".document",
-    {
-        width: 190,
+    /* ------------------------------------------------------
+       VIDEO
 
-        duration: BAR,
+       Mouvement légèrement plus sensible.
+       ------------------------------------------------------ */
 
-        ease: "power3.inOut"
-    },
-    BAR * 2
-);
+    const videoScale =
+        1 + videoWave * 0.025;
 
 
-visualTimeline.to(
-    ".document .media-placeholder",
-    {
-        scale: 1.08,
-        x: 8,
+    const videoX =
+        videoWave * 10;
 
-        duration: BAR * 2,
 
-        ease: "sine.inOut"
-    },
-    BAR * 2
-);
+    const videoY =
+        Math.cos(time * 0.35 + 2) * 7;
 
 
-visualTimeline.to(
-    ".document",
-    {
-        opacity: 0.72,
+    videoWindow.style.transform =
+        `translate(${videoX}px, ${videoY}px)
+         scale(${videoScale})`;
 
-        duration: BAR,
-
-        ease: "power2.inOut"
-    },
-    BAR * 3
-);
-
-
-/* ---------------------------------------------------------
-   ~00:08
-   VIDEO devient dominante
-
-   Safe zone = 840 px.
-   left 200 + width 640 = 840.
-   --------------------------------------------------------- */
-
-visualTimeline.to(
-    ".video",
-    {
-        left: 200,
-        top: 430,
-
-        width: 640,
-        height: 360,
-
-        duration: BAR,
-
-        ease: "power3.inOut"
-    },
-    BAR * 4
-);
-
-
-visualTimeline.to(
-    ".video .media-placeholder",
-    {
-        scale: 1.14,
-        x: -16,
-
-        duration: BAR * 2,
-
-        ease: "sine.inOut"
-    },
-    BAR * 4
-);
-
-
-visualTimeline.to(
-    ".main-image",
-    {
-        width: 470,
-        height: 560,
-
-        duration: BAR,
-
-        ease: "power3.inOut"
-    },
-    BAR * 4
-);
-
-
-visualTimeline.to(
-    ".main-image .media-placeholder",
-    {
-        scale: 1.06,
-        x: 10,
-
-        duration: BAR * 2,
-
-        ease: "sine.inOut"
-    },
-    BAR * 4
-);
-
-
-/* ---------------------------------------------------------
-   ~00:12 → ~00:15.5
-   Retour à la géométrie V0.2 validée
-   --------------------------------------------------------- */
-
-visualTimeline.to(
-    ".main-image",
-    {
-        width: 520,
-        height: 600,
-
-        duration: BAR * 2,
-
-        ease: "power3.inOut"
-    },
-    BAR * 6
-);
-
-
-visualTimeline.to(
-    ".document",
-    {
-        width: 220,
-        opacity: 1,
-
-        duration: BAR * 2,
-
-        ease: "power3.inOut"
-    },
-    BAR * 6
-);
-
-
-visualTimeline.to(
-    ".video",
-    {
-        left: 300,
-        top: 485,
-
-        width: 540,
-        height: 330,
-
-        duration: BAR * 2,
-
-        ease: "power3.inOut"
-    },
-    BAR * 6
-);
-
-
-visualTimeline.to(
-    ".main-image .media-placeholder",
-    {
-        scale: 1,
-        x: 0,
-
-        duration: BAR * 2,
-
-        ease: "power2.inOut"
-    },
-    BAR * 6
-);
-
-
-visualTimeline.to(
-    ".document .media-placeholder",
-    {
-        scale: 1,
-        x: 0,
-
-        duration: BAR * 2,
-
-        ease: "power2.inOut"
-    },
-    BAR * 6
-);
-
-
-visualTimeline.to(
-    ".video .media-placeholder",
-    {
-        scale: 1,
-        x: 0,
-
-        duration: BAR * 2,
-
-        ease: "power2.inOut"
-    },
-    BAR * 6
-);
+}
 
 
 /* =========================================================
-   IMPORTANT
-
-   Pour V0.3, le cycle visuel de V0.2 est répété
-   sur la durée de la maquette.
-
-   Plus tard, nous remplacerons cette répétition
-   par de vrais événements liés aux archives :
-   Michel Gondry, Clara Luciani, groupes,
-   machines, pochettes, etc.
-   ========================================================= */
-
-const VISUAL_CYCLE =
-    BAR * 8;
-
-
-/* =========================================================
-   FORMATAGE TIMECODE
-
-   Exemple :
-   48.22 secondes -> 00:48.22
+   TIMECODE
    ========================================================= */
 
 function formatTime(seconds) {
@@ -1837,10 +1336,7 @@ function formatTime(seconds) {
 
 
 /* =========================================================
-   DURÉE RÉELLE
-
-   Dès que le WAV est chargé, sa durée réelle
-   remplace les 161 secondes de référence.
+   DURÉE
    ========================================================= */
 
 function getDuration() {
@@ -1849,9 +1345,10 @@ function getDuration() {
         Number.isFinite(audio.duration) &&
         audio.duration > 0
     ) {
-        return audio.duration;
-    }
 
+        return audio.duration;
+
+    }
 
     return REFERENCE_DURATION;
 
@@ -1859,38 +1356,33 @@ function getDuration() {
 
 
 /* =========================================================
-   SYNCHRONISATION PRINCIPALE
+   UPDATE GLOBAL
 
-   audio.currentTime est l'horloge maîtresse.
+   Cette fonction ne dépend pas du PLAY pour fonctionner.
+   Elle tourne en permanence.
 
-   Cette fonction pilote :
-   - timecode
-   - playhead
-   - narration
-   - animation des fenêtres
+   Cela simplifie énormément la synchronisation.
    ========================================================= */
 
-function syncFilm() {
+function updateFilm() {
 
     const time =
-        audio.currentTime || 0;
+        Number.isFinite(audio.currentTime)
+            ? audio.currentTime
+            : 0;
 
 
     const duration =
         getDuration();
 
 
-    /* ------------------------------------------------------
-       TIMECODE
-       ------------------------------------------------------ */
+    /* TIMECODE */
 
     audioTime.textContent =
         `${formatTime(time)} / ${formatTime(duration)}`;
 
 
-    /* ------------------------------------------------------
-       PLAYHEAD
-       ------------------------------------------------------ */
+    /* PLAYHEAD */
 
     const progress =
         Math.max(
@@ -1902,61 +1394,126 @@ function syncFilm() {
         );
 
 
-    const waveformWidth =
-        waveform.clientWidth;
-
-
-    const playheadX =
-        progress * waveformWidth;
-
-
     playhead.style.left =
-        playheadX + "px";
+        `${progress * waveform.clientWidth}px`;
 
 
-    /* ------------------------------------------------------
-       NARRATION
-       ------------------------------------------------------ */
+    /* NARRATION */
 
-    const narrationIndex =
-        getNarrationIndex(time);
+    updateNarration(time);
 
 
-    showNarration(
-        narrationIndex
+    /* FENÊTRES */
+
+    updateWindows(time);
+
+
+    requestAnimationFrame(
+        updateFilm
     );
 
-
-    /* ------------------------------------------------------
-       MOUVEMENTS DES FENÊTRES
-
-       On reprend le cycle de V0.2,
-       mais il est maintenant asservi au WAV.
-       ------------------------------------------------------ */
-
-    const cycleTime =
-        time % VISUAL_CYCLE;
+}
 
 
-    visualTimeline.time(
-        cycleTime,
-        false
-    );
+/* =========================================================
+   ÉTAT AUDIO
+   ========================================================= */
 
+audio.addEventListener(
+    "loadedmetadata",
+    () => {
 
-    /* ------------------------------------------------------
-       Continuer tant que le WAV joue
-       ------------------------------------------------------ */
+        status.textContent =
+            "AUDIO : PRÊT";
 
-    if (!audio.paused) {
+        status.classList.remove(
+            "error"
+        );
 
-        requestAnimationFrame(
-            syncFilm
+        console.log(
+            "AUDIO OK",
+            audio.duration,
+            audio.currentSrc
         );
 
     }
+);
 
-}
+
+audio.addEventListener(
+    "canplay",
+    () => {
+
+        status.textContent =
+            "AUDIO : PRÊT";
+
+        status.classList.remove(
+            "error"
+        );
+
+    }
+);
+
+
+audio.addEventListener(
+    "playing",
+    () => {
+
+        status.textContent =
+            "AUDIO : LECTURE";
+
+    }
+);
+
+
+audio.addEventListener(
+    "pause",
+    () => {
+
+        if (
+            audio.currentTime > 0 &&
+            audio.currentTime < getDuration()
+        ) {
+
+            status.textContent =
+                "AUDIO : PAUSE";
+
+        }
+
+    }
+);
+
+
+audio.addEventListener(
+    "ended",
+    () => {
+
+        status.textContent =
+            "AUDIO : FIN";
+
+    }
+);
+
+
+audio.addEventListener(
+    "error",
+    () => {
+
+        status.textContent =
+            "ERREUR : audio/maquette.mp3 introuvable ou illisible";
+
+        status.classList.add(
+            "error"
+        );
+
+        console.error(
+            "ERREUR AUDIO",
+            audio.error,
+            audio.currentSrc
+        );
+
+    }
+);
 
 
 /* =========================================================
@@ -1965,9 +1522,10 @@ function syncFilm() {
 
 playButton.addEventListener(
     "click",
-    async (event) => {
+    async () => {
 
-        event.stopPropagation();
+        status.textContent =
+            "AUDIO : DÉMARRAGE…";
 
 
         try {
@@ -1975,25 +1533,23 @@ playButton.addEventListener(
             await audio.play();
 
 
-            gsap.to(
-                playIndicator,
-                {
-                    opacity: 0.45,
-                    duration: 0.2
-                }
-            );
-
-
-            requestAnimationFrame(
-                syncFilm
-            );
+            status.textContent =
+                "AUDIO : LECTURE";
 
         }
 
         catch (error) {
 
+            status.textContent =
+                "ERREUR DE LECTURE — VOIR CONSOLE";
+
+            status.classList.add(
+                "error"
+            );
+
+
             console.error(
-                "Lecture audio impossible :",
+                "PLAY ERROR",
                 error
             );
 
@@ -2009,24 +1565,9 @@ playButton.addEventListener(
 
 pauseButton.addEventListener(
     "click",
-    (event) => {
-
-        event.stopPropagation();
-
+    () => {
 
         audio.pause();
-
-
-        gsap.to(
-            playIndicator,
-            {
-                opacity: 0.15,
-                duration: 0.2
-            }
-        );
-
-
-        syncFilm();
 
     }
 );
@@ -2034,55 +1575,29 @@ pauseButton.addEventListener(
 
 /* =========================================================
    RESTART
-
-   Retour à 00:00 puis lecture.
    ========================================================= */
 
 restartButton.addEventListener(
     "click",
-    async (event) => {
-
-        event.stopPropagation();
-
+    async () => {
 
         audio.pause();
 
+        audio.currentTime = 0;
 
-        audio.currentTime =
-            0;
-
-
-        currentNarrationIndex =
-            -1;
-
-
-        syncFilm();
+        narrationIndex = -1;
 
 
         try {
 
             await audio.play();
 
-
-            gsap.to(
-                playIndicator,
-                {
-                    opacity: 0.45,
-                    duration: 0.2
-                }
-            );
-
-
-            requestAnimationFrame(
-                syncFilm
-            );
-
         }
 
         catch (error) {
 
             console.error(
-                "Lecture audio impossible :",
+                "RESTART ERROR",
                 error
             );
 
@@ -2095,15 +1610,13 @@ restartButton.addEventListener(
 /* =========================================================
    SCRUB
 
-   On peut cliquer dans l'audiogramme provisoire
-   pour se déplacer dans la maquette.
-
-   Très utile pour travailler la V0.3.
+   Clic sur l'audiogramme =
+   déplacement dans le morceau.
    ========================================================= */
 
 waveform.addEventListener(
     "click",
-    (event) => {
+    event => {
 
         const rect =
             waveform.getBoundingClientRect();
@@ -2127,95 +1640,22 @@ waveform.addEventListener(
             ratio * getDuration();
 
 
-        currentNarrationIndex =
+        narrationIndex =
             -1;
 
-
-        syncFilm();
-
     }
 );
 
 
 /* =========================================================
-   MÉTADONNÉES AUDIO CHARGÉES
+   LANCEMENT DU MOTEUR VISUEL
    ========================================================= */
 
-audio.addEventListener(
-    "loadedmetadata",
-    () => {
-
-        syncFilm();
-
-    }
+requestAnimationFrame(
+    updateFilm
 );
-
-
-/* =========================================================
-   SEEK
-
-   Permet au film de se remettre immédiatement
-   au bon état lorsqu'on change de position.
-   ========================================================= */
-
-audio.addEventListener(
-    "seeked",
-    () => {
-
-        currentNarrationIndex =
-            -1;
-
-
-        syncFilm();
-
-    }
-);
-
-
-/* =========================================================
-   FIN
-   ========================================================= */
-
-audio.addEventListener(
-    "ended",
-    () => {
-
-        gsap.to(
-            playIndicator,
-            {
-                opacity: 0,
-                duration: 0.5
-            }
-        );
-
-
-        syncFilm();
-
-    }
-);
-
-
-/* =========================================================
-   ÉTAT INITIAL
-   ========================================================= */
-
-visualTimeline.pause(0);
-audio.addEventListener("canplay", () => {
-    console.log("AUDIO OK — prêt à lire");
-});
-
-audio.addEventListener("play", () => {
-    console.log("PLAY —", audio.currentTime);
-});
-
-audio.addEventListener("error", () => {
-    console.error("ERREUR AUDIO", audio.error);
-});
-syncFilm();
 
 </script>
 
-
 </body>
-
 </html>
