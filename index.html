@@ -4,17 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mon expérience dans la musique — v0.3</title>
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<title>Mon expérience dans la musique — V0.3</title>
 
 <style>
-
-/* =========================================================
-   V0.3
-   MASTER : 1080 × 1920
-   SAFE ZONE : 120 px gauche / droite
-   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -25,8 +17,9 @@ body {
     margin: 0;
     width: 100%;
     height: 100%;
-    background: #d8d8d8;
     overflow: hidden;
+
+    background: #d8d8d8;
 
     font-family:
         "Helvetica Neue",
@@ -53,7 +46,7 @@ body {
 
 
 /* =========================================================
-   MASTER
+   MASTER 1080 × 1920
    ========================================================= */
 
 #film {
@@ -74,23 +67,27 @@ body {
 
 
 /* =========================================================
-   SIGNATURE / VERSION
+   SIGNATURE
    ========================================================= */
 
 .signature {
     position: absolute;
+
     top: 20px;
     left: 20px;
 
     font-size: 14px;
     letter-spacing: 1.5px;
+
     text-transform: uppercase;
 
     opacity: .45;
 }
 
+
 .version {
     position: absolute;
+
     right: 20px;
     bottom: 20px;
 
@@ -102,8 +99,12 @@ body {
 
 
 /* =========================================================
-   SAFE AREA
-   1080 - 120 - 120 = 840 px
+   SAFE ZONE
+
+   120 px GAUCHE
+   120 px DROITE
+
+   largeur utile = 840 px
    ========================================================= */
 
 .safe-area {
@@ -128,13 +129,14 @@ body {
     min-width: 0;
 }
 
+
 .metadata,
 .archive-zone,
 .script-zone,
 .audio-zone {
     width: 100%;
-    max-width: 100%;
     min-width: 0;
+    max-width: 100%;
 }
 
 
@@ -153,11 +155,11 @@ body {
 
     align-items: start;
 
-    overflow: hidden;
-
     border-top: 2px solid #111;
 
     padding-top: 15px;
+
+    overflow: hidden;
 
     font-size: 20px;
     letter-spacing: 1.6px;
@@ -165,9 +167,11 @@ body {
     text-transform: uppercase;
 }
 
+
 .metadata-title {
     white-space: nowrap;
 }
+
 
 .metadata-right {
     text-align: right;
@@ -178,7 +182,7 @@ body {
 
 
 /* =========================================================
-   ARCHIVE ZONE
+   ARCHIVES
    ========================================================= */
 
 .archive-zone {
@@ -192,9 +196,21 @@ body {
 
 
 /* =========================================================
-   IMAGE
-   V0.2 VALIDÉE
+   01 IMAGE
    ========================================================= */
+
+.image-label {
+    position: absolute;
+
+    left: 0;
+    top: 36px;
+
+    z-index: 20;
+
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
 
 .main-image {
     position: absolute;
@@ -212,27 +228,27 @@ body {
     overflow: hidden;
 
     z-index: 1;
-
-    transform-origin: center;
 }
 
-.image-label {
+
+/* =========================================================
+   02 DOCUMENT
+   ========================================================= */
+
+.document-label {
     position: absolute;
 
-    left: 0;
-    top: 36px;
+    right: 0;
+    top: 116px;
 
-    z-index: 10;
+    width: 220px;
+
+    z-index: 20;
 
     font-size: 17px;
     letter-spacing: 2px;
 }
 
-
-/* =========================================================
-   DOCUMENT
-   V0.2 VALIDÉE
-   ========================================================= */
 
 .document {
     position: absolute;
@@ -250,29 +266,25 @@ body {
     overflow: hidden;
 
     z-index: 1;
-
-    transform-origin: center;
 }
 
-.document-label {
+
+/* =========================================================
+   03 VIDEO
+   ========================================================= */
+
+.video-label {
     position: absolute;
 
-    right: 0;
-    top: 116px;
+    left: 300px;
+    top: 451px;
 
-    width: 220px;
-
-    z-index: 10;
+    z-index: 20;
 
     font-size: 17px;
     letter-spacing: 2px;
 }
 
-
-/* =========================================================
-   VIDEO
-   V0.2 VALIDÉE
-   ========================================================= */
 
 .video {
     position: absolute;
@@ -291,25 +303,11 @@ body {
     overflow: hidden;
 
     z-index: 3;
-
-    transform-origin: center;
-}
-
-.video-label {
-    position: absolute;
-
-    left: 300px;
-    top: 451px;
-
-    z-index: 10;
-
-    font-size: 17px;
-    letter-spacing: 2px;
 }
 
 
 /* =========================================================
-   PLACEHOLDERS
+   CONTENU DES FENÊTRES
    ========================================================= */
 
 .media-placeholder {
@@ -318,35 +316,31 @@ body {
     inset: 0;
 
     display: flex;
-
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
     width: 100%;
     height: 100%;
-
-    transform-origin: center;
 }
+
 
 .main-image .media-placeholder {
     font-size: 28px;
     letter-spacing: 2px;
 }
 
+
 .document .media-placeholder {
     font-size: 22px;
     letter-spacing: 1.5px;
 }
+
 
 .video .media-placeholder {
     font-size: 28px;
     letter-spacing: 2px;
 }
 
-
-/* =========================================================
-   FUTURS MÉDIAS
-   ========================================================= */
 
 .media {
     position: absolute;
@@ -367,12 +361,13 @@ body {
 .script-zone {
     position: relative;
 
-    overflow: hidden;
-
     border-top: 2px solid #111;
 
     padding-top: 30px;
+
+    overflow: hidden;
 }
+
 
 .script-label {
     margin-bottom: 24px;
@@ -383,11 +378,11 @@ body {
     text-transform: uppercase;
 }
 
+
 .script-text {
     width: 100%;
 
     font-size: 48px;
-
     line-height: 1.08;
 
     letter-spacing: -1px;
@@ -395,8 +390,6 @@ body {
     font-weight: 600;
 
     text-transform: uppercase;
-
-    opacity: 1;
 }
 
 
@@ -407,12 +400,13 @@ body {
 .audio-zone {
     position: relative;
 
-    overflow: hidden;
-
     border-top: 2px solid #111;
 
     padding-top: 16px;
+
+    overflow: hidden;
 }
+
 
 .audio-meta {
     display: grid;
@@ -429,6 +423,7 @@ body {
     letter-spacing: 1.5px;
 }
 
+
 .audio-time {
     text-align: right;
     white-space: nowrap;
@@ -436,7 +431,7 @@ body {
 
 
 /* =========================================================
-   AUDIOGRAMME FACTICE
+   WAVEFORM PLACEHOLDER
    ========================================================= */
 
 .waveform {
@@ -446,7 +441,6 @@ body {
     height: 55px;
 
     display: flex;
-
     align-items: center;
 
     gap: 4px;
@@ -455,6 +449,7 @@ body {
 
     cursor: pointer;
 }
+
 
 .bar {
     width: 6px;
@@ -487,7 +482,7 @@ body {
 
 
 /* =========================================================
-   CONTROLS
+   COMMANDES
    ========================================================= */
 
 .controls {
@@ -502,6 +497,7 @@ body {
 
     z-index: 100;
 }
+
 
 .control-button {
     padding: 8px 11px;
@@ -519,6 +515,7 @@ body {
     cursor: pointer;
 }
 
+
 .control-button:hover {
     background: #111;
     color: #f4f2ed;
@@ -526,24 +523,27 @@ body {
 
 
 /* =========================================================
-   DIAGNOSTIC
+   DIAGNOSTIC AUDIO
+   Invisible normalement.
+   Visible uniquement en cas d'erreur.
    ========================================================= */
 
 .status {
     position: absolute;
 
     left: 20px;
-    bottom: 85px;
+    bottom: 90px;
 
     max-width: 900px;
 
     font-size: 13px;
     letter-spacing: 1px;
 
-    opacity: .55;
+    opacity: 0;
 
     z-index: 100;
 }
+
 
 .status.error {
     opacity: 1;
@@ -572,34 +572,27 @@ body {
 
 
     <!-- =====================================================
-         AUDIO MASTER
+         AUDIO
+         
+         IMPORTANT :
+         maquette.mp3 est à la RACINE du dépôt.
          ===================================================== -->
 
     <audio
         id="masterAudio"
         preload="auto"
-    >
-        <source
-            src="audio/maquette.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
+        src="maquette.mp3"
+    ></audio>
 
-
-    <!-- =====================================================
-         DIAGNOSTIC
-         ===================================================== -->
 
     <div
         class="status"
         id="status"
-    >
-        AUDIO : CHARGEMENT…
-    </div>
+    ></div>
 
 
     <!-- =====================================================
-         CONTROLS
+         COMMANDES
          ===================================================== -->
 
     <div class="controls">
@@ -724,6 +717,7 @@ body {
                 04 / NARRATION
             </div>
 
+
             <div
                 class="script-text"
                 id="scriptText"
@@ -747,6 +741,7 @@ body {
                 <span>
                     PARIS M'EMMERDE
                 </span>
+
 
                 <span
                     class="audio-time"
@@ -783,18 +778,14 @@ body {
 <script>
 
 /* =========================================================
-   CONFIG
+   CONSTANTES
    ========================================================= */
-
-const BPM = 124;
-
-const BEAT = 60 / BPM;
 
 const REFERENCE_DURATION = 161;
 
 
 /* =========================================================
-   ELEMENTS
+   ÉLÉMENTS
    ========================================================= */
 
 const film =
@@ -802,9 +793,6 @@ const film =
 
 const audio =
     document.getElementById("masterAudio");
-
-const status =
-    document.getElementById("status");
 
 const playButton =
     document.getElementById("playButton");
@@ -827,6 +815,9 @@ const audioTime =
 const scriptText =
     document.getElementById("scriptText");
 
+const status =
+    document.getElementById("status");
+
 const mainImage =
     document.getElementById("mainImage");
 
@@ -838,7 +829,10 @@ const videoWindow =
 
 
 /* =========================================================
-   SCALE 1080 × 1920
+   SCALE
+
+   Le master reste réellement en 1080 × 1920.
+   Seul son affichage est réduit.
    ========================================================= */
 
 function scaleFilm() {
@@ -856,16 +850,18 @@ function scaleFilm() {
         `scale(${scale})`;
 }
 
+
 window.addEventListener(
     "resize",
     scaleFilm
 );
 
+
 scaleFilm();
 
 
 /* =========================================================
-   AUDIOGRAMME PLACEHOLDER
+   WAVEFORM PROVISOIRE
    ========================================================= */
 
 const heights = [
@@ -892,6 +888,7 @@ const heights = [
 
 ];
 
+
 heights.forEach(height => {
 
     const bar =
@@ -901,7 +898,7 @@ heights.forEach(height => {
         "bar";
 
     bar.style.height =
-        `${height}px`;
+        height + "px";
 
     waveform.appendChild(bar);
 
@@ -909,9 +906,9 @@ heights.forEach(height => {
 
 
 /* =========================================================
-   NARRATION
+   SCRIPT / TIMELINE
 
-   TIMINGS PROVISOIRES
+   Timings encore provisoires.
    ========================================================= */
 
 const narration = [
@@ -1108,7 +1105,8 @@ let narrationIndex = -1;
 
 function updateNarration(time) {
 
-    let newIndex = 0;
+    let index = 0;
+
 
     for (
         let i = 0;
@@ -1120,9 +1118,11 @@ function updateNarration(time) {
             time >= narration[i].start
         ) {
 
-            newIndex = i;
+            index = i;
 
-        } else {
+        }
+
+        else {
 
             break;
 
@@ -1132,186 +1132,176 @@ function updateNarration(time) {
 
 
     if (
-        newIndex === narrationIndex
+        index === narrationIndex
     ) {
+
         return;
+
     }
 
 
     narrationIndex =
-        newIndex;
+        index;
 
 
-    const newText =
-        narration[newIndex].text;
-
-
-    gsap.to(
-        scriptText,
-        {
-            opacity: 0,
-            y: -8,
-
-            duration: .12,
-
-            overwrite: true,
-
-            onComplete: () => {
-
-                scriptText.innerHTML =
-                    newText;
-
-
-                gsap.set(
-                    scriptText,
-                    {
-                        y: 10
-                    }
-                );
-
-
-                gsap.to(
-                    scriptText,
-                    {
-                        opacity: 1,
-                        y: 0,
-
-                        duration: .22,
-
-                        ease: "power2.out"
-                    }
-                );
-
-            }
-
-        }
-    );
+    scriptText.innerHTML =
+        narration[index].text;
 
 }
 
 
 /* =========================================================
-   ANIMATION DES FENÊTRES
+   ANIMATION DES TROIS FENÊTRES
 
    IMPORTANT :
-   On ne dépend PLUS d'une timeline GSAP externe.
 
-   L'état visuel est calculé directement
-   à partir de audio.currentTime.
+   À T = 0 :
+   transform = none.
 
-   Donc si le son est à 34.2 secondes,
-   l'image correspond forcément à 34.2 secondes.
+   Le cadrage reste donc EXACTEMENT celui
+   de la maquette validée.
+
+   Les mouvements arrivent progressivement.
    ========================================================= */
 
 function updateWindows(time) {
 
-    /*
-       Mouvement très lent.
+    if (time <= 0.05) {
 
-       Les trois valeurs utilisent des phases
-       différentes pour éviter un mouvement
-       mécanique parfaitement synchrone.
+        mainImage.style.transform =
+            "none";
+
+        documentWindow.style.transform =
+            "none";
+
+        videoWindow.style.transform =
+            "none";
+
+        return;
+
+    }
+
+
+    /*
+       Entrée progressive de l'animation
+       pendant les deux premières secondes.
     */
 
-    const imageWave =
-        Math.sin(time * 0.45);
+    const entrance =
+        Math.min(
+            1,
+            time / 2
+        );
 
 
-    const documentWave =
-        Math.sin(time * 0.37 + 1.8);
-
-
-    const videoWave =
-        Math.sin(time * 0.41 + 3.1);
-
-
-    /* ------------------------------------------------------
-       IMAGE
-       ------------------------------------------------------ */
-
-    const imageScale =
-        1 + imageWave * 0.018;
-
+    /* IMAGE */
 
     const imageX =
-        imageWave * 8;
-
+        Math.sin(time * 0.31)
+        * 5
+        * entrance;
 
     const imageY =
-        Math.cos(time * 0.31) * 5;
+        Math.sin(time * 0.23)
+        * 4
+        * entrance;
+
+    const imageScale =
+        1 +
+        Math.sin(time * 0.19)
+        * 0.008
+        * entrance;
 
 
     mainImage.style.transform =
-        `translate(${imageX}px, ${imageY}px)
-         scale(${imageScale})`;
+        `translate(
+            ${imageX}px,
+            ${imageY}px
+        )
+        scale(${imageScale})`;
 
 
-    /* ------------------------------------------------------
-       DOCUMENT
-       ------------------------------------------------------ */
-
-    const documentScale =
-        1 + documentWave * 0.022;
-
+    /* DOCUMENT */
 
     const documentX =
-        documentWave * 7;
-
+        Math.sin(time * 0.27 + 1)
+        * 4
+        * entrance;
 
     const documentY =
-        Math.cos(time * 0.27 + 1) * 8;
+        Math.sin(time * 0.21 + 1.4)
+        * 5
+        * entrance;
+
+    const documentScale =
+        1 +
+        Math.sin(time * 0.17 + 2)
+        * 0.009
+        * entrance;
 
 
     documentWindow.style.transform =
-        `translate(${documentX}px, ${documentY}px)
-         scale(${documentScale})`;
+        `translate(
+            ${documentX}px,
+            ${documentY}px
+        )
+        scale(${documentScale})`;
 
 
-    /* ------------------------------------------------------
-       VIDEO
-
-       Mouvement légèrement plus sensible.
-       ------------------------------------------------------ */
-
-    const videoScale =
-        1 + videoWave * 0.025;
-
+    /* VIDEO */
 
     const videoX =
-        videoWave * 10;
-
+        Math.sin(time * 0.29 + 2)
+        * 5
+        * entrance;
 
     const videoY =
-        Math.cos(time * 0.35 + 2) * 7;
+        Math.sin(time * 0.25 + 3)
+        * 4
+        * entrance;
+
+    const videoScale =
+        1 +
+        Math.sin(time * 0.18 + 1)
+        * 0.008
+        * entrance;
 
 
     videoWindow.style.transform =
-        `translate(${videoX}px, ${videoY}px)
-         scale(${videoScale})`;
+        `translate(
+            ${videoX}px,
+            ${videoY}px
+        )
+        scale(${videoScale})`;
 
 }
 
 
 /* =========================================================
-   TIMECODE
+   FORMAT TIMECODE
    ========================================================= */
 
 function formatTime(seconds) {
 
     if (
-        !Number.isFinite(seconds) ||
-        seconds < 0
+        !Number.isFinite(seconds)
     ) {
+
         seconds = 0;
+
     }
 
 
     const minutes =
-        Math.floor(seconds / 60);
+        Math.floor(
+            seconds / 60
+        );
 
 
     const secs =
-        Math.floor(seconds % 60);
+        Math.floor(
+            seconds % 60
+        );
 
 
     const hundredths =
@@ -1342,7 +1332,8 @@ function formatTime(seconds) {
 function getDuration() {
 
     if (
-        Number.isFinite(audio.duration) &&
+        Number.isFinite(audio.duration)
+        &&
         audio.duration > 0
     ) {
 
@@ -1350,18 +1341,14 @@ function getDuration() {
 
     }
 
+
     return REFERENCE_DURATION;
 
 }
 
 
 /* =========================================================
-   UPDATE GLOBAL
-
-   Cette fonction ne dépend pas du PLAY pour fonctionner.
-   Elle tourne en permanence.
-
-   Cela simplifie énormément la synchronisation.
+   MOTEUR PRINCIPAL
    ========================================================= */
 
 function updateFilm() {
@@ -1379,7 +1366,11 @@ function updateFilm() {
     /* TIMECODE */
 
     audioTime.textContent =
-        `${formatTime(time)} / ${formatTime(duration)}`;
+        formatTime(time)
+        +
+        " / "
+        +
+        formatTime(duration);
 
 
     /* PLAYHEAD */
@@ -1395,10 +1386,16 @@ function updateFilm() {
 
 
     playhead.style.left =
-        `${progress * waveform.clientWidth}px`;
+        (
+            progress
+            *
+            waveform.clientWidth
+        )
+        +
+        "px";
 
 
-    /* NARRATION */
+    /* TEXTE */
 
     updateNarration(time);
 
@@ -1416,100 +1413,37 @@ function updateFilm() {
 
 
 /* =========================================================
-   ÉTAT AUDIO
+   AUDIO EVENTS
    ========================================================= */
-
-audio.addEventListener(
-    "loadedmetadata",
-    () => {
-
-        status.textContent =
-            "AUDIO : PRÊT";
-
-        status.classList.remove(
-            "error"
-        );
-
-        console.log(
-            "AUDIO OK",
-            audio.duration,
-            audio.currentSrc
-        );
-
-    }
-);
-
-
-audio.addEventListener(
-    "canplay",
-    () => {
-
-        status.textContent =
-            "AUDIO : PRÊT";
-
-        status.classList.remove(
-            "error"
-        );
-
-    }
-);
-
-
-audio.addEventListener(
-    "playing",
-    () => {
-
-        status.textContent =
-            "AUDIO : LECTURE";
-
-    }
-);
-
-
-audio.addEventListener(
-    "pause",
-    () => {
-
-        if (
-            audio.currentTime > 0 &&
-            audio.currentTime < getDuration()
-        ) {
-
-            status.textContent =
-                "AUDIO : PAUSE";
-
-        }
-
-    }
-);
-
-
-audio.addEventListener(
-    "ended",
-    () => {
-
-        status.textContent =
-            "AUDIO : FIN";
-
-    }
-);
-
 
 audio.addEventListener(
     "error",
     () => {
 
         status.textContent =
-            "ERREUR : audio/maquette.mp3 introuvable ou illisible";
+            "ERREUR AUDIO : maquette.mp3";
 
         status.classList.add(
             "error"
         );
 
         console.error(
-            "ERREUR AUDIO",
-            audio.error,
-            audio.currentSrc
+            "Erreur audio :",
+            audio.error
+        );
+
+    }
+);
+
+
+audio.addEventListener(
+    "loadedmetadata",
+    () => {
+
+        console.log(
+            "Audio chargé :",
+            audio.duration,
+            "secondes"
         );
 
     }
@@ -1522,35 +1456,33 @@ audio.addEventListener(
 
 playButton.addEventListener(
     "click",
-    async () => {
+    () => {
 
-        status.textContent =
-            "AUDIO : DÉMARRAGE…";
-
-
-        try {
-
-            await audio.play();
+        const promise =
+            audio.play();
 
 
-            status.textContent =
-                "AUDIO : LECTURE";
+        if (
+            promise !== undefined
+        ) {
 
-        }
+            promise.catch(
+                error => {
 
-        catch (error) {
+                    status.textContent =
+                        "LECTURE AUDIO IMPOSSIBLE";
 
-            status.textContent =
-                "ERREUR DE LECTURE — VOIR CONSOLE";
-
-            status.classList.add(
-                "error"
-            );
+                    status.classList.add(
+                        "error"
+                    );
 
 
-            console.error(
-                "PLAY ERROR",
-                error
+                    console.error(
+                        "Erreur PLAY :",
+                        error
+                    );
+
+                }
             );
 
         }
@@ -1579,7 +1511,7 @@ pauseButton.addEventListener(
 
 restartButton.addEventListener(
     "click",
-    async () => {
+    () => {
 
         audio.pause();
 
@@ -1588,30 +1520,32 @@ restartButton.addEventListener(
         narrationIndex = -1;
 
 
-        try {
+        mainImage.style.transform =
+            "none";
 
-            await audio.play();
+        documentWindow.style.transform =
+            "none";
 
-        }
+        videoWindow.style.transform =
+            "none";
 
-        catch (error) {
 
-            console.error(
-                "RESTART ERROR",
-                error
-            );
+        audio.play().catch(
+            error => {
 
-        }
+                console.error(
+                    error
+                );
+
+            }
+        );
 
     }
 );
 
 
 /* =========================================================
-   SCRUB
-
-   Clic sur l'audiogramme =
-   déplacement dans le morceau.
+   SCRUB SUR WAVEFORM
    ========================================================= */
 
 waveform.addEventListener(
@@ -1623,7 +1557,9 @@ waveform.addEventListener(
 
 
         const x =
-            event.clientX - rect.left;
+            event.clientX
+            -
+            rect.left;
 
 
         const ratio =
@@ -1637,7 +1573,9 @@ waveform.addEventListener(
 
 
         audio.currentTime =
-            ratio * getDuration();
+            ratio
+            *
+            getDuration();
 
 
         narrationIndex =
@@ -1648,8 +1586,21 @@ waveform.addEventListener(
 
 
 /* =========================================================
-   LANCEMENT DU MOTEUR VISUEL
+   INITIALISATION
+
+   IMPORTANT :
+   aucun déplacement des fenêtres au chargement.
    ========================================================= */
+
+mainImage.style.transform =
+    "none";
+
+documentWindow.style.transform =
+    "none";
+
+videoWindow.style.transform =
+    "none";
+
 
 requestAnimationFrame(
     updateFilm
