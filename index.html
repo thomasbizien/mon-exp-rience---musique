@@ -1,12 +1,34 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>Mon expérience dans la musique — V0.3</title>
 
+<!-- GSAP : moteur d’animation des fenêtres -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+
 <style>
+
+/* =========================================================
+   MON EXPÉRIENCE DANS LA MUSIQUE — V0.3
+
+   MASTER : 1080 × 1920
+   TEMPO : 124 BPM
+   DURÉE DE RÉFÉRENCE : 02:41
+
+   Composition et animations issues de la V0.2.
+   Safe zone effective : 120 px à gauche et à droite.
+   ========================================================= */
+
+/* RESET */
 
 * {
     box-sizing: border-box;
@@ -15,11 +37,13 @@
 html,
 body {
     margin: 0;
+
     width: 100%;
     height: 100%;
-    overflow: hidden;
 
     background: #d8d8d8;
+
+    overflow: hidden;
 
     font-family:
         "Helvetica Neue",
@@ -28,26 +52,21 @@ body {
         sans-serif;
 }
 
-
-/* =========================================================
-   VIEWPORT
-   ========================================================= */
+/* VIEWPORT */
 
 .viewport {
     width: 100vw;
     height: 100vh;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
     overflow: hidden;
 }
 
-
-/* =========================================================
-   MASTER 1080 × 1920
-   ========================================================= */
+/* MASTER 1080 × 1920 */
 
 #film {
     position: relative;
@@ -63,12 +82,11 @@ body {
     overflow: hidden;
 
     transform-origin: center center;
+
+    cursor: pointer;
 }
 
-
-/* =========================================================
-   SIGNATURE
-   ========================================================= */
+/* SIGNATURE */
 
 .signature {
     position: absolute;
@@ -77,13 +95,15 @@ body {
     left: 20px;
 
     font-size: 14px;
+
     letter-spacing: 1.5px;
 
     text-transform: uppercase;
 
-    opacity: .45;
+    opacity: 0.45;
 }
 
+/* VERSION */
 
 .version {
     position: absolute;
@@ -92,20 +112,13 @@ body {
     bottom: 20px;
 
     font-size: 14px;
+
     letter-spacing: 1px;
 
-    opacity: .35;
+    opacity: 0.35;
 }
 
-
-/* =========================================================
-   SAFE ZONE
-
-   120 px GAUCHE
-   120 px DROITE
-
-   largeur utile = 840 px
-   ========================================================= */
+/* SAFE AREA */
 
 .safe-area {
     position: absolute;
@@ -116,6 +129,8 @@ body {
     top: 90px;
     bottom: 220px;
 
+    min-width: 0;
+
     display: grid;
 
     grid-template-rows:
@@ -125,24 +140,19 @@ body {
         150px;
 
     gap: 28px;
-
-    min-width: 0;
 }
-
 
 .metadata,
 .archive-zone,
 .script-zone,
 .audio-zone {
     width: 100%;
-    min-width: 0;
     max-width: 100%;
+
+    min-width: 0;
 }
 
-
-/* =========================================================
-   HEADER
-   ========================================================= */
+/* HEADER */
 
 .metadata {
     display: grid;
@@ -155,35 +165,36 @@ body {
 
     align-items: start;
 
+    overflow: hidden;
+
     border-top: 2px solid #111;
 
     padding-top: 15px;
 
-    overflow: hidden;
-
     font-size: 20px;
+
     letter-spacing: 1.6px;
 
     text-transform: uppercase;
 }
 
+.metadata > * {
+    min-width: 0;
+}
 
 .metadata-title {
     white-space: nowrap;
 }
 
-
 .metadata-right {
     text-align: right;
+
     white-space: nowrap;
 
     font-size: 18px;
 }
 
-
-/* =========================================================
-   ARCHIVES
-   ========================================================= */
+/* ARCHIVE ZONE */
 
 .archive-zone {
     position: relative;
@@ -194,23 +205,21 @@ body {
     border-bottom: 1px solid #aaa;
 }
 
+/* CLASSE COMMUNE DES FENÊTRES — V0.2 */
 
-/* =========================================================
-   01 IMAGE
-   ========================================================= */
+.window {
+    transform-origin: center center;
 
-.image-label {
-    position: absolute;
-
-    left: 0;
-    top: 36px;
-
-    z-index: 20;
-
-    font-size: 17px;
-    letter-spacing: 2px;
+    will-change:
+        transform,
+        width,
+        height,
+        left,
+        top,
+        opacity;
 }
 
+/* IMAGE MAJEURE */
 
 .main-image {
     position: absolute;
@@ -230,25 +239,20 @@ body {
     z-index: 1;
 }
 
-
-/* =========================================================
-   02 DOCUMENT
-   ========================================================= */
-
-.document-label {
+.image-label {
     position: absolute;
 
-    right: 0;
-    top: 116px;
+    left: 0;
+    top: 36px;
 
-    width: 220px;
-
-    z-index: 20;
+    z-index: 10;
 
     font-size: 17px;
+
     letter-spacing: 2px;
 }
 
+/* DOCUMENT */
 
 .document {
     position: absolute;
@@ -268,23 +272,22 @@ body {
     z-index: 1;
 }
 
-
-/* =========================================================
-   03 VIDEO
-   ========================================================= */
-
-.video-label {
+.document-label {
     position: absolute;
 
-    left: 300px;
-    top: 451px;
+    right: 0;
+    top: 116px;
 
-    z-index: 20;
+    width: 220px;
+
+    z-index: 10;
 
     font-size: 17px;
+
     letter-spacing: 2px;
 }
 
+/* VIDEO */
 
 .video {
     position: absolute;
@@ -305,42 +308,58 @@ body {
     z-index: 3;
 }
 
+.video-label {
+    position: absolute;
 
-/* =========================================================
-   CONTENU DES FENÊTRES
-   ========================================================= */
+    left: 300px;
+    top: 451px;
+
+    z-index: 10;
+
+    font-size: 17px;
+
+    letter-spacing: 2px;
+}
+
+/* CONTENU INTERNE DES FENÊTRES */
 
 .media-placeholder {
     position: absolute;
 
     inset: 0;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
     width: 100%;
     height: 100%;
-}
 
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transform-origin: center center;
+
+    will-change: transform;
+}
 
 .main-image .media-placeholder {
     font-size: 28px;
+
     letter-spacing: 2px;
 }
-
 
 .document .media-placeholder {
     font-size: 22px;
+
     letter-spacing: 1.5px;
 }
 
-
 .video .media-placeholder {
     font-size: 28px;
+
     letter-spacing: 2px;
 }
 
+/* FUTURS VRAIS MÉDIAS */
 
 .media {
     position: absolute;
@@ -353,36 +372,35 @@ body {
     object-fit: cover;
 }
 
-
-/* =========================================================
-   NARRATION
-   ========================================================= */
+/* NARRATION */
 
 .script-zone {
     position: relative;
 
+    overflow: hidden;
+
     border-top: 2px solid #111;
 
     padding-top: 30px;
-
-    overflow: hidden;
 }
-
 
 .script-label {
     margin-bottom: 24px;
 
     font-size: 17px;
+
     letter-spacing: 2px;
 
     text-transform: uppercase;
 }
 
-
 .script-text {
     width: 100%;
 
+    min-width: 0;
+
     font-size: 48px;
+
     line-height: 1.08;
 
     letter-spacing: -1px;
@@ -392,23 +410,25 @@ body {
     text-transform: uppercase;
 }
 
-
-/* =========================================================
-   AUDIO
-   ========================================================= */
+/* AUDIO */
 
 .audio-zone {
     position: relative;
 
+    overflow: hidden;
+
     border-top: 2px solid #111;
 
     padding-top: 16px;
-
-    overflow: hidden;
 }
 
+/* AUDIO METADATA */
 
 .audio-meta {
+    width: 100%;
+
+    min-width: 0;
+
     display: grid;
 
     grid-template-columns:
@@ -417,39 +437,43 @@ body {
 
     column-gap: 24px;
 
+    align-items: start;
+
     margin-bottom: 20px;
 
     font-size: 16px;
+
     letter-spacing: 1.5px;
 }
 
-
-.audio-time {
-    text-align: right;
-    white-space: nowrap;
+.audio-meta > * {
+    min-width: 0;
 }
 
+.audio-time {
+    white-space: nowrap;
 
-/* =========================================================
-   WAVEFORM PLACEHOLDER
-   ========================================================= */
+    text-align: right;
+}
+
+/* AUDIOGRAMME GRAPHIQUE V0.2 */
 
 .waveform {
     position: relative;
 
     width: 100%;
+    max-width: 100%;
+
     height: 55px;
 
     display: flex;
+
     align-items: center;
 
     gap: 4px;
 
     overflow: hidden;
-
-    cursor: pointer;
 }
-
 
 .bar {
     width: 6px;
@@ -459,15 +483,13 @@ body {
     background: #111;
 }
 
-
-/* =========================================================
-   PLAYHEAD
-   ========================================================= */
+/* PLAYHEAD */
 
 .playhead {
     position: absolute;
 
-    left: 0;
+    left: 42%;
+
     top: 48px;
 
     width: 2px;
@@ -475,15 +497,78 @@ body {
 
     background: #111;
 
-    opacity: .75;
+    opacity: 0.7;
+}
+
+/* INDICATEUR DE LECTURE */
+
+.play-indicator {
+    position: absolute;
+
+    left: 20px;
+    bottom: 20px;
+
+    font-size: 14px;
+
+    letter-spacing: 1.2px;
+
+    opacity: 0;
+
+    text-transform: uppercase;
 
     pointer-events: none;
 }
 
+/* DEBUG V0.2 */
 
-/* =========================================================
-   COMMANDES
-   ========================================================= */
+#film.debug::after {
+    content: "";
+
+    position: absolute;
+
+    left: 80px;
+    right: 180px;
+
+    top: 90px;
+    bottom: 220px;
+
+    border: 2px dashed rgba(255, 0, 0, 0.45);
+
+    pointer-events: none;
+
+    z-index: 999;
+}
+
+/* BOUTON V0.2 */
+
+.play-button {
+    position: absolute;
+
+    left: 20px;
+    bottom: 45px;
+
+    padding: 8px 12px;
+
+    border: 1px solid #111;
+
+    background: transparent;
+    color: #111;
+
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    z-index: 1000;
+}
+
+.play-button:hover {
+    background: #111;
+    color: #f4f2ed;
+}
+
+/* AJOUTS V0.3 */
 
 .controls {
     position: absolute;
@@ -492,67 +577,43 @@ body {
     bottom: 45px;
 
     display: flex;
-
     gap: 8px;
 
-    z-index: 100;
+    z-index: 1000;
 }
 
+.controls .play-button {
+    position: static;
+}
 
-.control-button {
-    padding: 8px 11px;
-
-    border: 1px solid #111;
-
-    background: transparent;
-    color: #111;
-
-    font-family: inherit;
-
-    font-size: 13px;
-    letter-spacing: 1.2px;
-
+.waveform {
     cursor: pointer;
+    touch-action: none;
 }
 
-
-.control-button:hover {
-    background: #111;
-    color: #f4f2ed;
+.waveform:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 3px;
 }
 
+.playhead {
+    pointer-events: none;
+}
 
-/* =========================================================
-   DIAGNOSTIC AUDIO
-   Invisible normalement.
-   Visible uniquement en cas d'erreur.
-   ========================================================= */
-
-.status {
+.audio-status {
     position: absolute;
 
     left: 20px;
     bottom: 90px;
 
-    max-width: 900px;
+    max-width: 1000px;
 
-    font-size: 13px;
-    letter-spacing: 1px;
-
-    opacity: 0;
-
-    z-index: 100;
-}
-
-
-.status.error {
-    opacity: 1;
-    font-weight: 600;
+    font-size: 14px;
 }
 
 </style>
-</head>
 
+</head>
 
 <body>
 
@@ -560,77 +621,66 @@ body {
 
 <main id="film">
 
-
     <div class="signature">
         THOMAS BIZIEN
     </div>
-
 
     <div class="version">
         V0.3
     </div>
 
+    <div class="play-indicator">
+        PLAY / 124 BPM
+    </div>
 
-    <!-- =====================================================
-         AUDIO
-         
-         IMPORTANT :
-         maquette.mp3 est à la RACINE du dépôt.
-         ===================================================== -->
+    <!--
+        Fichiers à placer dans le même dossier :
+        index.html
+        maquette.mp3
+    -->
 
     <audio
         id="masterAudio"
-        preload="auto"
         src="maquette.mp3"
+        preload="metadata"
     ></audio>
 
-
-    <div
-        class="status"
-        id="status"
-    ></div>
-
-
-    <!-- =====================================================
-         COMMANDES
-         ===================================================== -->
-
-    <div class="controls">
+    <div class="controls" aria-label="Lecture audio">
 
         <button
-            class="control-button"
+            type="button"
             id="playButton"
+            class="play-button"
         >
             ▶ PLAY
         </button>
 
         <button
-            class="control-button"
+            type="button"
             id="pauseButton"
+            class="play-button"
         >
             Ⅱ PAUSE
         </button>
 
         <button
-            class="control-button"
+            type="button"
             id="restartButton"
+            class="play-button"
         >
             ↺ RESTART
         </button>
 
     </div>
 
-
-    <!-- =====================================================
-         SAFE AREA
-         ===================================================== -->
+    <div
+        id="audioStatus"
+        class="audio-status"
+        role="status"
+        aria-live="polite"
+    ></div>
 
     <div class="safe-area">
-
-
-        <!-- =================================================
-             HEADER
-             ================================================= -->
 
         <header class="metadata">
 
@@ -645,23 +695,13 @@ body {
 
         </header>
 
-
-        <!-- =================================================
-             ARCHIVES
-             ================================================= -->
-
         <section class="archive-zone">
-
 
             <div class="image-label">
                 01 / IMAGE
             </div>
 
-
-            <div
-                class="main-image"
-                id="mainImage"
-            >
+            <div class="main-image window">
 
                 <div class="media-placeholder">
                     IMAGE MAJEURE
@@ -669,16 +709,11 @@ body {
 
             </div>
 
-
             <div class="document-label">
                 02 / DOCUMENT
             </div>
 
-
-            <div
-                class="document"
-                id="documentWindow"
-            >
+            <div class="document window">
 
                 <div class="media-placeholder">
                     DOCUMENT
@@ -686,16 +721,11 @@ body {
 
             </div>
 
-
             <div class="video-label">
                 03 / VIDEO
             </div>
 
-
-            <div
-                class="video"
-                id="videoWindow"
-            >
+            <div class="video window">
 
                 <div class="media-placeholder">
                     VIDEO SD
@@ -703,13 +733,7 @@ body {
 
             </div>
 
-
         </section>
-
-
-        <!-- =================================================
-             NARRATION
-             ================================================= -->
 
         <section class="script-zone">
 
@@ -717,24 +741,14 @@ body {
                 04 / NARRATION
             </div>
 
-
-            <div
-                class="script-text"
-                id="scriptText"
-            >
-                J'AI TOUJOURS RÊVÉ<br>
-                D'ÊTRE BATTEUR.
+            <div class="script-text">
+                J'AI COMMENCÉ LA MUSIQUE<br>
+                PAR LA BASSE.
             </div>
 
         </section>
 
-
-        <!-- =================================================
-             AUDIO
-             ================================================= -->
-
         <section class="audio-zone">
-
 
             <div class="audio-meta">
 
@@ -742,31 +756,26 @@ body {
                     PARIS M'EMMERDE
                 </span>
 
-
-                <span
-                    class="audio-time"
-                    id="audioTime"
-                >
+                <span class="audio-time">
                     00:00.00 / 02:41.00
                 </span>
 
             </div>
 
-
             <div
                 class="waveform"
                 id="waveform"
+                role="slider"
+                tabindex="0"
+                aria-label="Position dans le morceau"
+                aria-valuemin="0"
+                aria-valuemax="161"
+                aria-valuenow="0"
             ></div>
 
-
-            <div
-                class="playhead"
-                id="playhead"
-            ></div>
-
+            <div class="playhead"></div>
 
         </section>
-
 
     </div>
 
@@ -774,98 +783,43 @@ body {
 
 </div>
 
-
 <script>
-
-/* =========================================================
-   CONSTANTES
-   ========================================================= */
-
-const REFERENCE_DURATION = 161;
-
-
-/* =========================================================
-   ÉLÉMENTS
-   ========================================================= */
-
-const film =
-    document.getElementById("film");
-
-const audio =
-    document.getElementById("masterAudio");
-
-const playButton =
-    document.getElementById("playButton");
-
-const pauseButton =
-    document.getElementById("pauseButton");
-
-const restartButton =
-    document.getElementById("restartButton");
-
-const waveform =
-    document.getElementById("waveform");
-
-const playhead =
-    document.getElementById("playhead");
-
-const audioTime =
-    document.getElementById("audioTime");
-
-const scriptText =
-    document.getElementById("scriptText");
-
-const status =
-    document.getElementById("status");
-
-const mainImage =
-    document.getElementById("mainImage");
-
-const documentWindow =
-    document.getElementById("documentWindow");
-
-const videoWindow =
-    document.getElementById("videoWindow");
-
 
 /* =========================================================
    SCALE
 
-   Le master reste réellement en 1080 × 1920.
+   Le master reste en 1080 × 1920.
    Seul son affichage est réduit.
    ========================================================= */
 
 function scaleFilm() {
+    const film = document.getElementById("film");
 
-    const scaleX =
-        window.innerWidth / 1080;
+    const masterWidth = 1080;
+    const masterHeight = 1920;
 
-    const scaleY =
-        window.innerHeight / 1920;
+    const scaleX = window.innerWidth / masterWidth;
+    const scaleY = window.innerHeight / masterHeight;
 
-    const scale =
-        Math.min(scaleX, scaleY);
+    const scale = Math.min(scaleX, scaleY);
 
-    film.style.transform =
-        `scale(${scale})`;
+    film.style.transform = `scale(${scale})`;
 }
 
-
-window.addEventListener(
-    "resize",
-    scaleFilm
-);
-
+window.addEventListener("resize", scaleFilm);
 
 scaleFilm();
 
-
 /* =========================================================
-   WAVEFORM PROVISOIRE
+   AUDIOGRAMME PROVISOIRE
+
+   Graphisme V0.2 conservé.
+   Les barres ne représentent pas l’analyse du MP3.
    ========================================================= */
 
-const heights = [
+const waveform = document.getElementById("waveform");
 
+const heights = [
     12,18,26,38,52,31,20,44,55,36,
     22,16,29,48,54,41,25,19,33,51,
 
@@ -885,728 +839,822 @@ const heights = [
 
     31,48,54,39,23,16,27,43,51,35,
     21,15,29,46,55,37,24,18,33,49
-
 ];
 
-
 heights.forEach(height => {
+    const bar = document.createElement("div");
 
-    const bar =
-        document.createElement("div");
-
-    bar.className =
-        "bar";
-
-    bar.style.height =
-        height + "px";
+    bar.className = "bar";
+    bar.style.height = height + "px";
 
     waveform.appendChild(bar);
-
 });
 
+/* =========================================================
+   TEMPO V0.2
+
+   124 BPM
+   1 temps : 60 / 124 seconde
+   1 mesure : 4 temps
+   8 mesures : environ 15.48387 secondes
+   ========================================================= */
+
+const BEAT = 60 / 124;
+const BAR = BEAT * 4;
 
 /* =========================================================
-   SCRIPT / TIMELINE
+   TIMELINE V0.2
 
-   Timings encore provisoires.
+   Toujours en pause.
+   Son état est piloté par audio.currentTime.
+
+   overwrite:false conserve tous les segments
+   lors des déplacements avant/arrière.
+   ========================================================= */
+
+const demo = gsap.timeline({
+    paused: true,
+
+    defaults: {
+        overwrite: false
+    }
+});
+
+/* =========================================================
+   MESURES 1–2
+   00:00 → 00:03.87
+
+   Respiration des contenus dans les cadres.
+   ========================================================= */
+
+demo.to(
+    ".main-image .media-placeholder",
+    {
+        scale: 1.04,
+        duration: BAR * 2,
+        ease: "sine.inOut"
+    },
+    0
+);
+
+demo.to(
+    ".video .media-placeholder",
+    {
+        scale: 1.06,
+        duration: BAR * 2,
+        ease: "sine.inOut"
+    },
+    0
+);
+
+demo.to(
+    ".document .media-placeholder",
+    {
+        scale: 1.025,
+        duration: BAR * 2,
+        ease: "sine.inOut"
+    },
+    0
+);
+
+/* =========================================================
+   MESURES 3–4
+   00:03.87 → 00:07.74
+
+   Agrandissement de l’image.
+   Resserrement du document.
+   ========================================================= */
+
+demo.to(
+    ".main-image",
+    {
+        width: 580,
+        height: 640,
+        duration: BAR,
+        ease: "power3.inOut"
+    },
+    BAR * 2
+);
+
+demo.to(
+    ".main-image .media-placeholder",
+    {
+        scale: 1.10,
+        x: -12,
+        duration: BAR * 2,
+        ease: "sine.inOut"
+    },
+    BAR * 2
+);
+
+demo.to(
+    ".document",
+    {
+        width: 190,
+        duration: BAR,
+        ease: "power3.inOut"
+    },
+    BAR * 2
+);
+
+demo.to(
+    ".document .media-placeholder",
+    {
+        scale: 1.08,
+        x: 8,
+        duration: BAR * 2,
+        ease: "sine.inOut"
+    },
+    BAR * 2
+);
+
+demo.to(
+    ".document",
+    {
+        opacity: 0.72,
+        duration: BAR,
+        ease: "power2.inOut"
+    },
+    BAR * 3
+);
+
+/* =========================================================
+   MESURES 5–6
+   00:07.74 → 00:11.61
+
+   La vidéo devient dominante.
+   ========================================================= */
+
+demo.to(
+    ".video",
+    {
+        left: 180,
+        top: 430,
+
+        width: 640,
+        height: 360,
+
+        duration: BAR,
+        ease: "power3.inOut"
+    },
+    BAR * 4
+);
+
+demo.to(
+    ".video .media-placeholder",
+    {
+        scale: 1.14,
+        x: -16,
+        duration: BAR * 2,
+        ease: "sine.inOut"
+    },
+    BAR * 4
+);
+
+demo.to(
+    ".main-image",
+    {
+        width: 470,
+        height: 560,
+        duration: BAR,
+        ease: "power3.inOut"
+    },
+    BAR * 4
+);
+
+demo.to(
+    ".main-image .media-placeholder",
+    {
+        scale: 1.06,
+        x: 10,
+        duration: BAR * 2,
+        ease: "sine.inOut"
+    },
+    BAR * 4
+);
+
+/* =========================================================
+   MESURES 7–8
+   00:11.61 → 00:15.48
+
+   Retour à la composition initiale.
+   ========================================================= */
+
+demo.to(
+    ".main-image",
+    {
+        width: 520,
+        height: 600,
+        duration: BAR * 2,
+        ease: "power3.inOut"
+    },
+    BAR * 6
+);
+
+demo.to(
+    ".document",
+    {
+        width: 220,
+        opacity: 1,
+        duration: BAR * 2,
+        ease: "power3.inOut"
+    },
+    BAR * 6
+);
+
+demo.to(
+    ".video",
+    {
+        left: 300,
+        top: 485,
+
+        width: 540,
+        height: 330,
+
+        duration: BAR * 2,
+        ease: "power3.inOut"
+    },
+    BAR * 6
+);
+
+demo.to(
+    ".main-image .media-placeholder",
+    {
+        scale: 1,
+        x: 0,
+        duration: BAR * 2,
+        ease: "power2.inOut"
+    },
+    BAR * 6
+);
+
+demo.to(
+    ".document .media-placeholder",
+    {
+        scale: 1,
+        x: 0,
+        duration: BAR * 2,
+        ease: "power2.inOut"
+    },
+    BAR * 6
+);
+
+demo.to(
+    ".video .media-placeholder",
+    {
+        scale: 1,
+        x: 0,
+        duration: BAR * 2,
+        ease: "power2.inOut"
+    },
+    BAR * 6
+);
+
+/* =========================================================
+   V0.3 — AUDIO = HORLOGE MAÎTRE
+
+   Le motif V0.2 de huit mesures est répété à 124 BPM.
+   Aucun segment GSAP ne joue indépendamment de l’audio.
+   ========================================================= */
+
+const REFERENCE_DURATION = 161;
+
+/* =========================================================
+   NARRATION ÉDITABLE
+
+   start = début du bloc en secondes.
+   | = saut de ligne.
+
+   Minutages provisoires récupérés dans la conversation.
+   À recaler sur la voix enregistrée.
+   Garder les blocs dans l’ordre chronologique.
    ========================================================= */
 
 const narration = [
-
     {
         start: 0,
-        text:
-            "J'AI TOUJOURS RÊVÉ<br>D'ÊTRE BATTEUR."
+        text: "J'AI TOUJOURS RÊVÉ|D'ÊTRE BATTEUR."
     },
-
     {
         start: 6,
-        text:
-            "MAIS LES BATTEURS,<br>ÇA PREND DE LA PLACE."
+        text: "MAIS LES BATTEURS,|ÇA PREND DE LA PLACE."
     },
-
     {
         start: 12,
-        text:
-            "ET LE BRUIT..."
+        text: "ET LE BRUIT..."
     },
-
     {
         start: 17.5,
-        text:
-            "À LA LONGUE,<br>PLUS PERSONNE FINIT<br>PAR NOUS BLAIRER."
+        text: "À LA LONGUE,|PLUS PERSONNE FINIT|PAR NOUS BLAIRER."
     },
-
     {
         start: 23.5,
-        text:
-            "BASSISTE,<br>C'EST PLUS SIMPLE."
+        text: "BASSISTE,|C'EST PLUS SIMPLE."
     },
-
     {
         start: 29,
-        text:
-            "LES GROUPES<br>NOUS RECHERCHENT."
+        text: "LES GROUPES|NOUS RECHERCHENT."
     },
-
     {
         start: 34,
-        text:
-            "J'AI FAIT DU PUNK,<br>DU SURF-ROCK."
+        text: "J'AI FAIT DU PUNK,|DU SURF-ROCK."
     },
-
     {
         start: 41,
-        text:
-            "ON A ÉTÉ SIGNÉS<br>PAR YAROL POUPAUD."
+        text: "ON A ÉTÉ SIGNÉS|PAR YAROL POUPAUD."
     },
-
     {
         start: 48,
-        text:
-            "UNE ÉQUIPE<br>DE BÉBÉS ROCKEURS."
+        text: "UNE ÉQUIPE|DE BÉBÉS ROCKEURS."
     },
-
     {
         start: 53.5,
-        text:
-            "J'AI JOUÉ AVEC<br>DES GENS CONNUS."
+        text: "J'AI JOUÉ AVEC|DES GENS CONNUS."
     },
-
     {
         start: 59.5,
-        text:
-            "COMME<br>MICHEL GONDRY."
+        text: "COMME|MICHEL GONDRY."
     },
-
     {
         start: 64,
-        text:
-            "CLARA LUCIANI M'A FAIT<br>TENIR LA BASSE."
+        text: "CLARA LUCIANI M'A FAIT|TENIR LA BASSE."
     },
-
     {
         start: 70.5,
-        text:
-            "J'EN AVAIS MARRE<br>DES GENS CÉLÈBRES."
+        text: "J'EN AVAIS MARRE|DES GENS CÉLÈBRES."
     },
-
     {
         start: 77,
-        text:
-            "J'AI DÉMISSIONNÉ."
+        text: "J'AI DÉMISSIONNÉ."
     },
-
     {
         start: 82,
-        text:
-            "JE RESTAIS CHEZ MOI<br>AVEC MES COPINES."
+        text: "JE RESTAIS CHEZ MOI|AVEC MES COPINES."
     },
-
     {
         start: 89,
-        text:
-            "ON ENREGISTRAIT DES TRUCS<br>SOUS DES NOMS OBSCURS."
+        text: "ON ENREGISTRAIT DES TRUCS|SOUS DES NOMS OBSCURS."
     },
-
     {
         start: 96,
-        text:
-            "LE NOM ÉVOLUAIT<br>EN FONCTION DES RUPTURES."
+        text: "LE NOM ÉVOLUAIT|EN FONCTION DES RUPTURES."
     },
-
     {
         start: 102.5,
-        text:
-            "TOUT LE MONDE S'EST MIS<br>À CHERCHER DU TRAVAIL."
+        text: "TOUT LE MONDE S'EST MIS|À CHERCHER DU TRAVAIL."
     },
-
     {
         start: 109,
-        text:
-            "ON N'AVAIT PLUS LE TEMPS<br>D'AVOIR UN GROUPE."
+        text: "ON N'AVAIT PLUS LE TEMPS|D'AVOIR UN GROUPE."
     },
-
     {
         start: 115,
-        text:
-            "LA DISPARITION<br>DES GROUPES."
+        text: "LA DISPARITION|DES GROUPES."
     },
-
     {
         start: 121,
-        text:
-            "ET PUIS LA MUSIQUE<br>EST REVENUE."
+        text: "ET PUIS LA MUSIQUE|EST REVENUE."
     },
-
     {
         start: 126,
-        text:
-            "MAIS LES GROUPES,<br>BEAUCOUP MOINS."
+        text: "MAIS LES GROUPES,|BEAUCOUP MOINS."
     },
-
     {
         start: 131,
-        text:
-            "UN TYPE TOUT SEUL<br>DERRIÈRE SES MACHINES."
+        text: "UN TYPE TOUT SEUL|DERRIÈRE SES MACHINES."
     },
-
     {
         start: 137,
-        text:
-            "AVEC LA NOSTALGIE<br>DE L'ACOUSTIQUE."
+        text: "AVEC LA NOSTALGIE|DE L'ACOUSTIQUE."
     },
-
     {
         start: 142,
-        text:
-            "ALORS J'AI COMMENCÉ<br>À FAIRE AUTREMENT."
+        text: "ALORS J'AI COMMENCÉ|À FAIRE AUTREMENT."
     },
-
     {
         start: 147,
-        text:
-            "À PRODUIRE SEUL.<br>À ENREGISTRER SEUL."
+        text: "À PRODUIRE SEUL.|À ENREGISTRER SEUL."
     },
-
     {
         start: 151,
-        text:
-            "MÉNAGE SAMEDI."
+        text: "MÉNAGE SAMEDI."
     },
-
     {
         start: 154,
-        text:
-            "AUSTRALOPUNCKTECH."
+        text: "AUSTRALOPUNCKTECH."
     },
-
     {
         start: 157,
-        text:
-            "ÉLECTRONIQUE<br>MÉLANCOLIQUE MUSIQUE."
+        text: "ÉLECTRONIQUE|MÉLANCOLIQUE MUSIQUE."
     },
-
     {
         start: 159,
-        text:
-            "J'AI RECOMMENCÉ<br>À FAIRE DE LA MUSIQUE."
+        text: "J'AI RECOMMENCÉ|À FAIRE DE LA MUSIQUE."
     }
-
 ];
 
+/* ÉLÉMENTS */
 
-/* =========================================================
-   NARRATION ACTIVE
-   ========================================================= */
+const audio = document.getElementById("masterAudio");
+const audioTime = document.querySelector(".audio-time");
+const playhead = document.querySelector(".playhead");
+const scriptText = document.querySelector(".script-text");
+const playIndicator = document.querySelector(".play-indicator");
+const audioStatus = document.getElementById("audioStatus");
+
+const playButton = document.getElementById("playButton");
+const pauseButton = document.getElementById("pauseButton");
+const restartButton = document.getElementById("restartButton");
+
+const motifDuration = BAR * 8;
 
 let narrationIndex = -1;
+let frame = null;
+let pendingSeek = null;
+let playRequest = 0;
 
+/* DURÉE RÉELLE DU MP3 */
 
-function updateNarration(time) {
+function duration() {
+    return Number.isFinite(audio.duration) && audio.duration > 0
+        ? audio.duration
+        : REFERENCE_DURATION;
+}
+
+/* TIMECODE MM:SS.CC */
+
+function timecode(seconds) {
+    const ticks = Math.floor(
+        Math.max(0, seconds) * 100 + 0.000001
+    );
+
+    const minutes = String(
+        Math.floor(ticks / 6000)
+    ).padStart(2, "0");
+
+    const secs = String(
+        Math.floor(ticks / 100) % 60
+    ).padStart(2, "0");
+
+    const hundredths = String(
+        ticks % 100
+    ).padStart(2, "0");
+
+    return `${minutes}:${secs}.${hundredths}`;
+}
+
+/* =========================================================
+   SYNCHRONISATION
+
+   audio.currentTime pilote :
+   - la timeline GSAP ;
+   - le timecode ;
+   - le playhead ;
+   - le bloc de narration.
+   ========================================================= */
+
+function sync() {
+    const time = Math.max(
+        0,
+        Math.min(audio.currentTime || 0, duration())
+    );
+
+    demo.pause().time(
+        time % motifDuration,
+        true
+    );
+
+    audioTime.textContent =
+        `${timecode(time)} / ${timecode(duration())}`;
+
+    const playheadTravel = Math.max(
+        0,
+        waveform.clientWidth - playhead.offsetWidth
+    );
+
+    playhead.style.left =
+        `${(time / duration()) * playheadTravel}px`;
+
+    waveform.setAttribute(
+        "aria-valuemax",
+        String(duration())
+    );
+
+    waveform.setAttribute(
+        "aria-valuenow",
+        String(time)
+    );
+
+    waveform.setAttribute(
+        "aria-valuetext",
+        `${timecode(time)} sur ${timecode(duration())}`
+    );
 
     let index = 0;
 
-
     for (
-        let i = 0;
-        i < narration.length;
+        let i = 1;
+        i < narration.length && narration[i].start <= time;
         i++
     ) {
-
-        if (
-            time >= narration[i].start
-        ) {
-
-            index = i;
-
-        }
-
-        else {
-
-            break;
-
-        }
-
+        index = i;
     }
 
+    if (index !== narrationIndex) {
+        narrationIndex = index;
 
-    if (
-        index === narrationIndex
-    ) {
+        const lines = narration[index].text.split("|");
 
-        return;
+        scriptText.replaceChildren();
 
+        lines.forEach((line, i) => {
+            if (i) {
+                scriptText.appendChild(
+                    document.createElement("br")
+                );
+            }
+
+            scriptText.appendChild(
+                document.createTextNode(line)
+            );
+        });
     }
 
+    playIndicator.style.opacity =
+        audio.paused || audio.ended ? "0" : "0.45";
 
-    narrationIndex =
-        index;
-
-
-    scriptText.innerHTML =
-        narration[index].text;
-
+    playButton.setAttribute(
+        "aria-pressed",
+        String(!audio.paused && !audio.ended)
+    );
 }
 
+/* BOUCLE D’AFFICHAGE */
 
-/* =========================================================
-   ANIMATION DES TROIS FENÊTRES
-
-   IMPORTANT :
-
-   À T = 0 :
-   transform = none.
-
-   Le cadrage reste donc EXACTEMENT celui
-   de la maquette validée.
-
-   Les mouvements arrivent progressivement.
-   ========================================================= */
-
-function updateWindows(time) {
-
-    if (time <= 0.05) {
-
-        mainImage.style.transform =
-            "none";
-
-        documentWindow.style.transform =
-            "none";
-
-        videoWindow.style.transform =
-            "none";
-
-        return;
-
+function stopFrames() {
+    if (frame !== null) {
+        cancelAnimationFrame(frame);
     }
 
+    frame = null;
+}
 
-    /*
-       Entrée progressive de l'animation
-       pendant les deux premières secondes.
-    */
+function tick() {
+    frame = null;
 
-    const entrance =
+    sync();
+
+    if (!audio.paused && !audio.ended) {
+        frame = requestAnimationFrame(tick);
+    }
+}
+
+/* PLAY */
+
+async function play() {
+    const request = ++playRequest;
+
+    audioStatus.textContent = "";
+
+    if (audio.ended) {
+        seek(0);
+    }
+
+    try {
+        await audio.play();
+
+        if (request !== playRequest) {
+            return;
+        }
+
+        sync();
+    } catch (error) {
+        if (
+            request !== playRequest ||
+            error.name === "AbortError"
+        ) {
+            return;
+        }
+
+        audioStatus.textContent =
+            "Lecture impossible : vérifiez maquette.mp3 à côté de index.html, puis cliquez sur PLAY.";
+
+        sync();
+    }
+}
+
+/* PAUSE */
+
+function pause() {
+    ++playRequest;
+
+    audio.pause();
+
+    stopFrames();
+
+    sync();
+}
+
+/* NAVIGATION TEMPORELLE */
+
+function seek(seconds) {
+    const target = Math.max(
+        0,
+        Math.min(seconds, duration())
+    );
+
+    if (audio.readyState === 0) {
+        pendingSeek = target;
+
+        audio.load();
+
+        return;
+    }
+
+    pendingSeek = null;
+
+    audio.currentTime = target;
+
+    sync();
+}
+
+/* BOUTONS */
+
+playButton.addEventListener("click", play);
+
+pauseButton.addEventListener("click", pause);
+
+restartButton.addEventListener("click", () => {
+    pause();
+    seek(0);
+
+    // RESTART reprend la lecture depuis le début.
+    play();
+});
+
+/* ÉVÉNEMENTS AUDIO */
+
+audio.addEventListener("play", () => {
+    stopFrames();
+    tick();
+});
+
+audio.addEventListener("pause", () => {
+    stopFrames();
+    sync();
+});
+
+audio.addEventListener("ended", () => {
+    stopFrames();
+    sync();
+});
+
+for (
+    const event of [
+        "timeupdate",
+        "seeking",
+        "seeked",
+        "durationchange"
+    ]
+) {
+    audio.addEventListener(event, sync);
+}
+
+audio.addEventListener("loadedmetadata", () => {
+    if (pendingSeek !== null) {
+        seek(pendingSeek);
+    }
+
+    sync();
+});
+
+audio.addEventListener("error", () => {
+    stopFrames();
+
+    audioStatus.textContent =
+        "Audio introuvable ou illisible : placez maquette.mp3 à côté de index.html.";
+
+    sync();
+});
+
+/* =========================================================
+   NAVIGATION PAR CLIC / GLISSEMENT / TACTILE
+
+   getBoundingClientRect tient compte de la réduction
+   du master à l’écran.
+   ========================================================= */
+
+function seekFromPointer(event) {
+    const rect = waveform.getBoundingClientRect();
+
+    if (!rect.width) {
+        return;
+    }
+
+    const ratio = Math.max(
+        0,
         Math.min(
             1,
-            time / 2
-        );
-
-
-    /* IMAGE */
-
-    const imageX =
-        Math.sin(time * 0.31)
-        * 5
-        * entrance;
-
-    const imageY =
-        Math.sin(time * 0.23)
-        * 4
-        * entrance;
-
-    const imageScale =
-        1 +
-        Math.sin(time * 0.19)
-        * 0.008
-        * entrance;
-
-
-    mainImage.style.transform =
-        `translate(
-            ${imageX}px,
-            ${imageY}px
+            (event.clientX - rect.left) / rect.width
         )
-        scale(${imageScale})`;
-
-
-    /* DOCUMENT */
-
-    const documentX =
-        Math.sin(time * 0.27 + 1)
-        * 4
-        * entrance;
-
-    const documentY =
-        Math.sin(time * 0.21 + 1.4)
-        * 5
-        * entrance;
-
-    const documentScale =
-        1 +
-        Math.sin(time * 0.17 + 2)
-        * 0.009
-        * entrance;
-
-
-    documentWindow.style.transform =
-        `translate(
-            ${documentX}px,
-            ${documentY}px
-        )
-        scale(${documentScale})`;
-
-
-    /* VIDEO */
-
-    const videoX =
-        Math.sin(time * 0.29 + 2)
-        * 5
-        * entrance;
-
-    const videoY =
-        Math.sin(time * 0.25 + 3)
-        * 4
-        * entrance;
-
-    const videoScale =
-        1 +
-        Math.sin(time * 0.18 + 1)
-        * 0.008
-        * entrance;
-
-
-    videoWindow.style.transform =
-        `translate(
-            ${videoX}px,
-            ${videoY}px
-        )
-        scale(${videoScale})`;
-
-}
-
-
-/* =========================================================
-   FORMAT TIMECODE
-   ========================================================= */
-
-function formatTime(seconds) {
-
-    if (
-        !Number.isFinite(seconds)
-    ) {
-
-        seconds = 0;
-
-    }
-
-
-    const minutes =
-        Math.floor(
-            seconds / 60
-        );
-
-
-    const secs =
-        Math.floor(
-            seconds % 60
-        );
-
-
-    const hundredths =
-        Math.floor(
-            (seconds % 1) * 100
-        );
-
-
-    return (
-        String(minutes).padStart(2, "0")
-        +
-        ":"
-        +
-        String(secs).padStart(2, "0")
-        +
-        "."
-        +
-        String(hundredths).padStart(2, "0")
     );
 
+    seek(ratio * duration());
 }
 
+let dragging = false;
+
+waveform.addEventListener("pointerdown", event => {
+    if (event.button !== 0) {
+        return;
+    }
+
+    dragging = true;
+
+    waveform.setPointerCapture(event.pointerId);
+
+    waveform.focus({
+        preventScroll: true
+    });
+
+    seekFromPointer(event);
+});
+
+waveform.addEventListener("pointermove", event => {
+    if (dragging) {
+        seekFromPointer(event);
+    }
+});
+
+waveform.addEventListener("pointerup", event => {
+    if (dragging) {
+        seekFromPointer(event);
+    }
+
+    dragging = false;
+});
+
+waveform.addEventListener("pointercancel", () => {
+    dragging = false;
+});
+
+waveform.addEventListener("lostpointercapture", () => {
+    dragging = false;
+});
 
 /* =========================================================
-   DURÉE
+   NAVIGATION AU CLAVIER
+
+   Flèches : ±1 seconde
+   Maj + flèches : ±10 secondes
+   Home : début
+   End : fin
    ========================================================= */
 
-function getDuration() {
+waveform.addEventListener("keydown", event => {
+    const step = event.shiftKey ? 10 : 1;
+
+    let target;
 
     if (
-        Number.isFinite(audio.duration)
-        &&
-        audio.duration > 0
+        event.key === "ArrowRight" ||
+        event.key === "ArrowUp"
     ) {
-
-        return audio.duration;
-
+        target = audio.currentTime + step;
     }
 
-
-    return REFERENCE_DURATION;
-
-}
-
-
-/* =========================================================
-   MOTEUR PRINCIPAL
-   ========================================================= */
-
-function updateFilm() {
-
-    const time =
-        Number.isFinite(audio.currentTime)
-            ? audio.currentTime
-            : 0;
-
-
-    const duration =
-        getDuration();
-
-
-    /* TIMECODE */
-
-    audioTime.textContent =
-        formatTime(time)
-        +
-        " / "
-        +
-        formatTime(duration);
-
-
-    /* PLAYHEAD */
-
-    const progress =
-        Math.max(
-            0,
-            Math.min(
-                1,
-                time / duration
-            )
-        );
-
-
-    playhead.style.left =
-        (
-            progress
-            *
-            waveform.clientWidth
-        )
-        +
-        "px";
-
-
-    /* TEXTE */
-
-    updateNarration(time);
-
-
-    /* FENÊTRES */
-
-    updateWindows(time);
-
-
-    requestAnimationFrame(
-        updateFilm
-    );
-
-}
-
-
-/* =========================================================
-   AUDIO EVENTS
-   ========================================================= */
-
-audio.addEventListener(
-    "error",
-    () => {
-
-        status.textContent =
-            "ERREUR AUDIO : maquette.mp3";
-
-        status.classList.add(
-            "error"
-        );
-
-        console.error(
-            "Erreur audio :",
-            audio.error
-        );
-
+    if (
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowDown"
+    ) {
+        target = audio.currentTime - step;
     }
-);
 
-
-audio.addEventListener(
-    "loadedmetadata",
-    () => {
-
-        console.log(
-            "Audio chargé :",
-            audio.duration,
-            "secondes"
-        );
-
+    if (event.key === "Home") {
+        target = 0;
     }
-);
 
-
-/* =========================================================
-   PLAY
-   ========================================================= */
-
-playButton.addEventListener(
-    "click",
-    () => {
-
-        const promise =
-            audio.play();
-
-
-        if (
-            promise !== undefined
-        ) {
-
-            promise.catch(
-                error => {
-
-                    status.textContent =
-                        "LECTURE AUDIO IMPOSSIBLE";
-
-                    status.classList.add(
-                        "error"
-                    );
-
-
-                    console.error(
-                        "Erreur PLAY :",
-                        error
-                    );
-
-                }
-            );
-
-        }
-
+    if (event.key === "End") {
+        target = duration();
     }
-);
 
+    if (target !== undefined) {
+        event.preventDefault();
 
-/* =========================================================
-   PAUSE
-   ========================================================= */
-
-pauseButton.addEventListener(
-    "click",
-    () => {
-
-        audio.pause();
-
+        seek(target);
     }
-);
+});
 
+/* INITIALISATION */
 
-/* =========================================================
-   RESTART
-   ========================================================= */
+window.addEventListener("resize", sync);
 
-restartButton.addEventListener(
-    "click",
-    () => {
+document.addEventListener("visibilitychange", sync);
 
-        audio.pause();
-
-        audio.currentTime = 0;
-
-        narrationIndex = -1;
-
-
-        mainImage.style.transform =
-            "none";
-
-        documentWindow.style.transform =
-            "none";
-
-        videoWindow.style.transform =
-            "none";
-
-
-        audio.play().catch(
-            error => {
-
-                console.error(
-                    error
-                );
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
-   SCRUB SUR WAVEFORM
-   ========================================================= */
-
-waveform.addEventListener(
-    "click",
-    event => {
-
-        const rect =
-            waveform.getBoundingClientRect();
-
-
-        const x =
-            event.clientX
-            -
-            rect.left;
-
-
-        const ratio =
-            Math.max(
-                0,
-                Math.min(
-                    1,
-                    x / rect.width
-                )
-            );
-
-
-        audio.currentTime =
-            ratio
-            *
-            getDuration();
-
-
-        narrationIndex =
-            -1;
-
-    }
-);
-
-
-/* =========================================================
-   INITIALISATION
-
-   IMPORTANT :
-   aucun déplacement des fenêtres au chargement.
-   ========================================================= */
-
-mainImage.style.transform =
-    "none";
-
-documentWindow.style.transform =
-    "none";
-
-videoWindow.style.transform =
-    "none";
-
-
-requestAnimationFrame(
-    updateFilm
-);
+sync();
 
 </script>
 
 </body>
+
 </html>
